@@ -1,0 +1,23 @@
+/*
+Outside In
+1. Composición (position, float, clear, display)
+2. Modelo de caja (width, height, margin, padding)
+3. Propiedades visuales (color, background, border, box-shadow)
+4. Tipografía (font-size, font-family, text-align, text-transform)
+5. Miscelánea (cursor, overflow, z-index)
+*/
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 50px;
+  height: 50px;
+}
+
+.avatar__img {
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+  border-radius: 50px;
+}

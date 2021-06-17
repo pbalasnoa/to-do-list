@@ -1,23 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import Header from "./components/Header";
+import Modal from "./components/Modal";
+import BottomAppBar from "./components/BottomAppBar";
+
+import useModal from "./hooks/useModal";
+import { useForm } from "./hooks/useForm";
+import { db } from "./services/firebase";
+
+const initialValues = {
+  task: "",
+};
 
 function App() {
+  const { values, setValues, handleInputChange } = useForm(initialValues);
+  const [isOpenModal, setIsOpenModal, openModal, closeModal] = useModal(false);
+
+  const handleSaveTask = async (e) => {
+    e.preventDefault();
+    console.log("desde app", values);
+    await db.collection("task").doc().set(values);
+    setValues(initialValues);
+    setIsOpenModal(false);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <Header />
+
+      <Modal
+        isOpen={isOpenModal}
+        closeModal={closeModal}
+        values={values}
+        handleInputChange={handleInputChange}
+        handleSaveTask={handleSaveTask}
+      />
+      <BottomAppBar openModal={openModal} />
     </div>
   );
 }
