@@ -1,4 +1,6 @@
+import { useEffect, useState } from "react";
 import Header from "./components/Header";
+import Task from "./components/Task";
 import Modal from "./components/Modal";
 import BottomAppBar from "./components/BottomAppBar";
 
@@ -8,9 +10,11 @@ import { db } from "./services/firebase";
 
 const initialValues = {
   task: "",
+  details: "",
 };
 
 function App() {
+  const [dataTask, setDataTask] = useState(null);
   const { values, setValues, handleInputChange } = useForm(initialValues);
   const [isOpenModal, setIsOpenModal, openModal, closeModal] = useModal(false);
 
@@ -22,13 +26,34 @@ function App() {
     setIsOpenModal(false);
   };
 
+  const getTask = () => {
+    db.collection("task").onSnapshot((querySnapshot) => {
+      const docs = [];
+      querySnapshot.forEach((doc) => {
+        docs.push({ ...doc.data(), id: doc.id });
+      });
+      setDataTask(docs);
+    });
+  };
+
+  const handleCloseModal = () => {
+    closeModal();
+    setValues(initialValues);
+  };
+
+  useEffect(() => {
+    getTask();
+  }, []);
+
   return (
     <div className="container">
       <Header />
-
+      {dataTask?.map((task) => (
+        <Task key={task.id} dataTask={task} />
+      ))}
       <Modal
-        isOpen={isOpenModal}
-        closeModal={closeModal}
+        isOpenModal={isOpenModal}
+        closeModal={handleCloseModal}
         values={values}
         handleInputChange={handleInputChange}
         handleSaveTask={handleSaveTask}
