@@ -1,40 +1,16 @@
-import Header from "./components/Header";
-import Modal from "./components/Modal";
-import BottomAppBar from "./components/BottomAppBar";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import useModal from "./hooks/useModal";
-import { useForm } from "./hooks/useForm";
-import { db } from "./services/firebase";
-
-const initialValues = {
-  task: "",
-};
+import HomeTask from "./view/HomeTask";
+import EditTask from "./view/EditTask";
 
 function App() {
-  const { values, setValues, handleInputChange } = useForm(initialValues);
-  const [isOpenModal, setIsOpenModal, openModal, closeModal] = useModal(false);
-
-  const handleSaveTask = async (e) => {
-    e.preventDefault();
-    console.log("desde app", values);
-    await db.collection("task").doc().set(values);
-    setValues(initialValues);
-    setIsOpenModal(false);
-  };
-
   return (
-    <div className="container">
-      <Header />
-
-      <Modal
-        isOpen={isOpenModal}
-        closeModal={closeModal}
-        values={values}
-        handleInputChange={handleInputChange}
-        handleSaveTask={handleSaveTask}
-      />
-      <BottomAppBar openModal={openModal} />
-    </div>
+    <Router>
+      <Switch>
+        <Route exact path="/" component={HomeTask} />
+        <Route exact path="/edit/:id" component={EditTask} />
+      </Switch>
+    </Router>
   );
 }
 
