@@ -9,6 +9,7 @@ Outside In
 :root {
   --white: #fff;
   --gray-500: #9e9e9e;
+  --gray-800: #424242;
   --gray-900: #212121;
   --blue-200: #dbe6fd;
   --blue-500: #47597e;
@@ -43,11 +44,16 @@ Outside In
 
 html {
   font-family: "roboto-light";
+  color: var(--gray-800);
+}
+
+a {
+  text-decoration: none;
+  color: var(--gray-500);
 }
 
 .container {
-  margin-top: 1rem;
-  margin-inline: 1rem;
+  margin: 1rem 1rem 5.5rem;
 }
 
 .button {
@@ -55,6 +61,7 @@ html {
   border: none;
   background: none;
   letter-spacing: 1px;
+  text-align: right;
 }
 
 .button--active {
@@ -64,5 +71,22 @@ html {
 
 .button--disable {
   color: var(--blue-200);
-  cursor: no-drop;
+}
+
+.icon {
+  margin-right: 1rem;
+  color: var(--blue-500);
+}
+.--gray {
+  color: var(--gray-500);
+}
+
+.--pointer {
+  cursor: pointer;
+}
+
+.--bottom {
+  position: fixed;
+  bottom: 16px;
+  left: 100px;
 }

@@ -19,6 +19,7 @@ Outside In
 .tabs {
   display: flex;
   height: 100%;
+  background-color: var(--white);
 }
 
 .tab {
@@ -59,7 +60,7 @@ Outside In
 
 .fab {
   border-radius: 50%;
-  background-color: #fe989c;
+  background-color: var(--blue-500);
   display: flex;
   justify-content: center;
   align-items: center;
