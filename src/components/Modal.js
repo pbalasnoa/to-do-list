@@ -1,18 +1,16 @@
 import ReactDOM from "react-dom";
-import { useEffect } from "react";
 import "../styles/components/Modal.css";
 
 import useModal from "../hooks/useModal";
-import { useFocusListen, useFocusClick } from "../hooks/useFocus";
-
-const MIN_TEXTAREA_HEIGHT = 24;
+import Textarea from "./Textarea";
+import { useFocusListen } from "../hooks/useFocus";
 
 const Modal = (props) => {
   const { isOpenModal, closeModal, values, handleInputChange, handleSaveTask } =
     props;
   const [showInputDetails, setIsOpenModal, showDetails, closeDetails] =
     useModal(false);
-  const [textareaRef, setTextareaFocus] = useFocusClick();
+  const textareaRef = useFocusListen(showInputDetails);
   const inputRef = useFocusListen(isOpenModal);
   const handleClickModal = (e) => e.stopPropagation();
 
@@ -21,21 +19,6 @@ const Modal = (props) => {
     closeDetails();
   };
 
-  const handleShowDetails = () => {
-    showDetails();
-    setTextareaFocus();
-  };
-
-  useEffect(() => {
-    if (textareaRef.current) {
-      textareaRef.current.style.height = `${MIN_TEXTAREA_HEIGHT}px`;
-      textareaRef.current.style.height = `${Math.max(
-        textareaRef.current.scrollHeight,
-        MIN_TEXTAREA_HEIGHT
-      )}px`;
-    }
-  }, [values.details]);
-
   return ReactDOM.createPortal(
     <section
       className={`modal ${isOpenModal && "is--open"}`}
@@ -43,25 +26,23 @@ const Modal = (props) => {
     >
       <div className="modal-container" onClick={handleClickModal}>
         <div>
-          <input
-            type="text"
-            className="modal-input"
+          <Textarea
+            classes="modal-input"
             name="task"
             value={values.task}
-            placeholder="Nueva tarea"
-            ref={inputRef}
-            onChange={handleInputChange}
-            autoComplete="off"
+            message="Nueva tarea"
+            inputRef={inputRef}
+            handleChange={handleInputChange}
           />
           {showInputDetails && (
-            <textarea
+            <Textarea
               type="text"
-              className="modal-input --small"
+              classes="modal-input --small"
               name="details"
               value={values.details}
-              placeholder="Agregar detalles"
-              ref={textareaRef}
-              onChange={handleInputChange}
+              message="Agregar detalles"
+              inputRef={textareaRef}
+              handleChange={handleInputChange}
               autoComplete="off"
             />
           )}
@@ -70,8 +51,8 @@ const Modal = (props) => {
           <div>
             <span
               className="material-icons icon"
-              onClick={handleShowDetails}
-              onTouchStart={handleShowDetails}
+              onClick={showDetails}
+              onTouchStart={showDetails}
             >
               sort
             </span>
