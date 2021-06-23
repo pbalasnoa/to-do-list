@@ -4,11 +4,10 @@ import Task from "../components/Task";
 import Modal from "../components/Modal";
 import BottomAppBar from "../components/BottomAppBar";
 
-import { Link } from "react-router-dom";
 import useModal from "../hooks/useModal";
 import { useForm } from "../hooks/useForm";
-import usePutTask from "../hooks/usePutTask";
-import { db } from "../services/firebase";
+
+import { watchTask, postTask, deleteTask } from "../services/firestoreTask";
 
 const initialValues = {
   task: "",
@@ -17,25 +16,20 @@ const initialValues = {
 
 function HomeTask() {
   const [dataTask, setDataTask] = useState(null);
+  const [taskCompleted, setTaskCompleted] = useState(null);
   const { values, setValues, handleInputChange } = useForm(initialValues);
   const [isOpenModal, setIsOpenModal, openModal, closeModal] = useModal(false);
-  const { handlePutTask } = usePutTask();
 
   const handleSaveTask = (e) => {
     e.preventDefault();
-    handlePutTask(null, "task", values);
+    postTask("task", values);
     setValues(initialValues);
     setIsOpenModal(false);
   };
 
-  const getTask = () => {
-    db.collection("task").onSnapshot((querySnapshot) => {
-      const docs = [];
-      querySnapshot.forEach((doc) => {
-        docs.push({ ...doc.data(), id: doc.id });
-      });
-      setDataTask(docs);
-    });
+  const hanldeTaskCompleted = (task) => {
+    postTask("taskCompleted", task);
+    deleteTask(task.id, "task");
   };
 
   const handleCloseModal = () => {
@@ -44,29 +38,37 @@ function HomeTask() {
   };
 
   useEffect(() => {
-    getTask();
+    watchTask((task) => {
+      console.log("desde el watch task", task);
+      setDataTask(task);
+    }, "task");
+    watchTask((taskCompleted) => {
+      console.log("desde el watch completed", taskCompleted);
+      setTaskCompleted(taskCompleted);
+    }, "taskCompleted");
   }, []);
 
   return (
     <div className="container">
       <Header />
-      {dataTask?.map((task) => (
-        <div key={task.id} className="task-container">
-          <div>
-            <span
-              className="material-icons icon --gray --pointer"
-              // onClick={() => console.log("hola querida")}
-            >
-              radio_button_unchecked
+      {dataTask && (
+        <Task tasks={dataTask} hanldeTaskCompleted={hanldeTaskCompleted} />
+      )}
+
+      {taskCompleted && (
+        <>
+          <div className="divider"></div>
+          <div className="container-task-completed">
+            <h4 className="title-completed">
+              Completadas {`(${taskCompleted.length})`}
+            </h4>
+            <span className="material-icons icon --gray --pointer">
+              expand_more
             </span>
           </div>
-          <div>
-            <Link to={{ pathname: `/edit/${task.id}`, data: task }}>
-              <Task dataTask={task} />
-            </Link>
-          </div>
-        </div>
-      ))}
+          <Task tasks={taskCompleted} isCompleted={true} />
+        </>
+      )}
       <Modal
         isOpenModal={isOpenModal}
         closeModal={handleCloseModal}

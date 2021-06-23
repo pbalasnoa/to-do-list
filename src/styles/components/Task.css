@@ -4,6 +4,11 @@
   margin-bottom: 1.1rem;
 }
 
+.container-task-completed {
+  display: flex;
+  justify-content: space-between;
+}
+
 .task-content {
   display: flex;
   flex-direction: column;
@@ -13,6 +18,10 @@
 .task-title {
   color: var(--gray-900);
   font-weight: bold;
+}
+
+.task-title--text-decoration {
+  text-decoration: line-through;
 }
 
 .task-subtitle {

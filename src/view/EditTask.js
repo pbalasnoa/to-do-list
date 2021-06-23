@@ -1,32 +1,26 @@
 import TopAppBar from "../components/TopAppBar";
 import EditForm from "../components/EditForm";
 
-import { db } from "../services/firebase";
+import { putTask, deleteTask } from "../services/firestoreTask";
 import { useHistory } from "react-router-dom";
 import { useForm } from "../hooks/useForm";
-import usePutTask from "../hooks/usePutTask";
 
 const EditTask = (props) => {
   const history = useHistory();
   const { data } = props.location;
   const { values, handleInputChange } = useForm(data);
-  const { handlePutTask } = usePutTask();
 
-  const deleteTask = async (id) => {
-    await db.collection("task").doc(id).delete();
+  const handledeleteTask = async (id) => {
+    deleteTask(id, "task");
     history.push("/");
-  };
-
-  const putTask = () => {
-    handlePutTask(data.id, "task", values);
   };
 
   return (
     <div className="container">
       <TopAppBar
         id={data.id}
-        handleDelete={deleteTask}
-        handlePutTask={putTask}
+        handleDelete={handledeleteTask}
+        handlePutTask={() => putTask(data.id, "task", values)}
       />
       <EditForm values={values} handleInputChange={handleInputChange} />
     </div>

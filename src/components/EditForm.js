@@ -5,7 +5,7 @@ import Textarea from "./Textarea";
 const EditForm = ({ values, handleInputChange }) => {
   const Ref = useRef(null);
   return (
-    <div>
+    <>
       <p className="label">My List 1</p>
       <Textarea
         classes="modal-input"
@@ -33,7 +33,7 @@ const EditForm = ({ values, handleInputChange }) => {
       >
         Marcar como completada
       </button>
-    </div>
+    </>
   );
 };
 
