@@ -1,6 +1,6 @@
 import "../styles/components/BottomAppBar.css";
 
-const BottomAppBar = ({ openModal }) => {
+const BottomAppBar = ({ openModal, openModalOptions }) => {
   return (
     <div className="bottom-bar">
       {/* <div className="slider"></div> */}
@@ -10,13 +10,15 @@ const BottomAppBar = ({ openModal }) => {
         </div>
         <div className="tab tab--fab">
           <div className="top">
-            <span className="fab material-icons" onClick={openModal}>
+            <span className="fab material-icons --pointer" onClick={openModal}>
               add
             </span>
           </div>
         </div>
         <div className="tab tab--right">
-          <span className="material-icons">more_vert</span>
+          <span className="material-icons --pointer" onClick={openModalOptions}>
+            more_vert
+          </span>
         </div>
       </div>
     </div>

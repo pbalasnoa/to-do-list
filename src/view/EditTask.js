@@ -7,11 +7,11 @@ import { useForm } from "../hooks/useForm";
 
 const EditTask = (props) => {
   const history = useHistory();
-  const { data } = props.location;
+  const { data, state } = props.location;
   const { values, handleInputChange } = useForm(data);
 
-  const handledeleteTask = async (id) => {
-    deleteTask(id, "task");
+  const handledeleteTask = async (id, collection) => {
+    deleteTask(id, collection);
     history.push("/");
   };
 
@@ -19,10 +19,15 @@ const EditTask = (props) => {
     <div className="container">
       <TopAppBar
         id={data.id}
+        state={state}
         handleDelete={handledeleteTask}
         handlePutTask={() => putTask(data.id, "task", values)}
       />
-      <EditForm values={values} handleInputChange={handleInputChange} />
+      <EditForm
+        values={values}
+        state={state}
+        handleInputChange={handleInputChange}
+      />
     </div>
   );
 };

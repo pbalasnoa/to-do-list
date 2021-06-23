@@ -2,12 +2,18 @@ import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Task from "../components/Task";
 import Modal from "../components/Modal";
+import ModalOptions from "../components/ModalOptions";
 import BottomAppBar from "../components/BottomAppBar";
 
 import useModal from "../hooks/useModal";
 import { useForm } from "../hooks/useForm";
 
-import { watchTask, postTask, deleteTask } from "../services/firestoreTask";
+import {
+  watchTask,
+  postTask,
+  hanldeTaskCompleted,
+  deleteTask,
+} from "../services/firestoreTask";
 
 const initialValues = {
   task: "",
@@ -16,9 +22,16 @@ const initialValues = {
 
 function HomeTask() {
   const [dataTask, setDataTask] = useState(null);
-  const [taskCompleted, setTaskCompleted] = useState(null);
+  const [taskCompleted, setTaskCompleted] = useState([]);
   const { values, setValues, handleInputChange } = useForm(initialValues);
   const [isOpenModal, setIsOpenModal, openModal, closeModal] = useModal(false);
+  const [
+    isOpenModalOptions,
+    setIsOpenModalOptions,
+    openModalOptions,
+    closeModalOptions,
+  ] = useModal(false);
+  const [showTaskIncompleted, setShowTaskIncompleted] = useModal(false);
 
   const handleSaveTask = (e) => {
     e.preventDefault();
@@ -27,23 +40,20 @@ function HomeTask() {
     setIsOpenModal(false);
   };
 
-  const hanldeTaskCompleted = (task) => {
-    postTask("taskCompleted", task);
-    deleteTask(task.id, "task");
-  };
-
   const handleCloseModal = () => {
     closeModal();
     setValues(initialValues);
   };
 
+  const handleShowTaskIncompleted = () => {
+    setShowTaskIncompleted(!showTaskIncompleted);
+  };
+
   useEffect(() => {
     watchTask((task) => {
-      console.log("desde el watch task", task);
       setDataTask(task);
     }, "task");
     watchTask((taskCompleted) => {
-      console.log("desde el watch completed", taskCompleted);
       setTaskCompleted(taskCompleted);
     }, "taskCompleted");
   }, []);
@@ -55,20 +65,36 @@ function HomeTask() {
         <Task tasks={dataTask} hanldeTaskCompleted={hanldeTaskCompleted} />
       )}
 
-      {taskCompleted && (
+      {taskCompleted.length ? (
         <>
           <div className="divider"></div>
           <div className="container-task-completed">
             <h4 className="title-completed">
               Completadas {`(${taskCompleted.length})`}
             </h4>
-            <span className="material-icons icon --gray --pointer">
-              expand_more
-            </span>
+            {showTaskIncompleted ? (
+              <span
+                className={"material-icons icon --gray --pointer"}
+                onClick={handleShowTaskIncompleted}
+              >
+                expand_more
+              </span>
+            ) : (
+              <span
+                className={"material-icons icon --gray --pointer"}
+                onClick={handleShowTaskIncompleted}
+              >
+                expand_less
+              </span>
+            )}
           </div>
-          <Task tasks={taskCompleted} isCompleted={true} />
+          <Task
+            tasks={taskCompleted}
+            isCompleted={true}
+            showTaskIncompleted={showTaskIncompleted}
+          />
         </>
-      )}
+      ) : null}
       <Modal
         isOpenModal={isOpenModal}
         closeModal={handleCloseModal}
@@ -76,7 +102,13 @@ function HomeTask() {
         handleInputChange={handleInputChange}
         handleSaveTask={handleSaveTask}
       />
-      <BottomAppBar openModal={openModal} />
+      <ModalOptions
+        isOpenModal={isOpenModalOptions}
+        closeModal={closeModalOptions}
+        taskCompleted={taskCompleted}
+        deleteTask={deleteTask}
+      />
+      <BottomAppBar openModal={openModal} openModalOptions={openModalOptions} />
     </div>
   );
 }

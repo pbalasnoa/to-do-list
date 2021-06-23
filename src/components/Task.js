@@ -2,12 +2,17 @@ import "../styles/components/Task.css";
 
 import { Link } from "react-router-dom";
 
-const Task = ({ tasks, hanldeTaskCompleted, isCompleted }) => {
-  console.log(isCompleted);
+const Task = (props) => {
+  const { tasks, hanldeTaskCompleted, isCompleted, showTaskIncompleted } =
+    props;
+
   return (
     <>
       {tasks.map((task) => (
-        <div key={task.id} className="task-container">
+        <div
+          key={task.id}
+          className={` ${showTaskIncompleted ? "--hide" : "task-container"}`}
+        >
           <div>
             {isCompleted ? (
               <span className="material-icons icon --blue">done</span>
@@ -20,7 +25,13 @@ const Task = ({ tasks, hanldeTaskCompleted, isCompleted }) => {
               </span>
             )}
           </div>
-          <Link to={{ pathname: `/edit/${task.id}`, data: task }}>
+          <Link
+            to={{
+              pathname: `/edit/${task.id}`,
+              data: task,
+              state: { isCompleted: isCompleted },
+            }}
+          >
             <div className="task-content">
               <p
                 className={`task-title ${

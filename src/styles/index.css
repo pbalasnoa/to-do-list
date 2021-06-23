@@ -9,6 +9,7 @@ Outside In
 :root {
   --white: #fff;
   --gray-500: #9e9e9e;
+  --gray-600: #757575;
   --gray-800: #424242;
   --gray-900: #212121;
   --blue-200: #dbe6fd;
@@ -81,6 +82,10 @@ a {
   color: var(--gray-500);
 }
 
+.--gray-dark {
+  color: var(--gray-800);
+}
+
 .--blue {
   color: var(--blue-500);
 }
@@ -92,7 +97,15 @@ a {
 .--bottom {
   position: fixed;
   bottom: 16px;
-  left: 100px;
+  right: 100px;
+  transform: translateX(100px);
+  margin-right: 16px;
+}
+
+.--small {
+  margin-block: 0;
+  font-family: "roboto-regular";
+  font-size: 0.9rem;
 }
 
 .divider {
@@ -107,4 +120,13 @@ a {
   font-weight: 500;
   color: var(--gray-900);
   margin-bottom: 1.5rem;
+}
+
+textarea:disabled {
+  background-color: var(--white);
+  color: var(--gray-500);
+}
+
+textarea:disabled.task-title--text-decoration {
+  color: var(--gray-600);
 }

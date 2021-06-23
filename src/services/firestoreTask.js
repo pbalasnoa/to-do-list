@@ -23,3 +23,13 @@ export const deleteTask = async (id, collection) => {
   await db.collection(collection).doc(id).delete();
   return true;
 };
+
+export const hanldeTaskCompleted = (task) => {
+  postTask("taskCompleted", task);
+  deleteTask(task.id, "task");
+};
+
+export const handleTaskincomplete = (task) => {
+  postTask("task", task);
+  deleteTask(task.id, "taskCompleted");
+};

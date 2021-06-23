@@ -21,18 +21,22 @@
   left: 0;
   padding: 1rem;
   width: 100%;
+  /* height: 168px; */
+  overflow-y: auto;
+  background-color: white;
+}
+
+.modal-container--new-task-movil {
   min-height: 168px;
   max-height: 400px;
   margin-bottom: 1rem;
-  /* max-height: 600px; */
-  overflow-y: auto;
-  background-color: white;
 }
 
 .modal-input {
   height: 24px;
   width: 100%;
-  margin-block: 12px;
+  margin-block: 2px;
+  padding-block: 10px;
   font-family: "roboto-regular";
   font-size: 1rem;
   border: none;
@@ -42,10 +46,9 @@
   outline: none;
 }
 
-.--small {
-  margin-block: 0;
-  font-family: "roboto-regular";
-  font-size: 0.9rem;
+.--flex {
+  display: flex;
+  align-items: flex-end;
 }
 
 .modal-options-container {

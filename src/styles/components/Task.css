@@ -4,6 +4,10 @@
   margin-bottom: 1.1rem;
 }
 
+.--hide {
+  display: none;
+}
+
 .container-task-completed {
   display: flex;
   justify-content: space-between;

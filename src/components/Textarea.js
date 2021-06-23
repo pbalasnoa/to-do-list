@@ -3,7 +3,8 @@ import { useEffect } from "react";
 const MIN_TEXTAREA_HEIGHT = 24;
 
 const Textarea = (props) => {
-  const { classes, name, value, message, inputRef, handleChange } = props;
+  const { classes, disabled, name, value, message, inputRef, handleChange } =
+    props;
 
   useEffect(() => {
     // if (inputRef === null) return;
@@ -20,6 +21,7 @@ const Textarea = (props) => {
     <textarea
       type="text"
       className={classes}
+      disabled={disabled}
       name={name}
       value={value}
       placeholder={message}

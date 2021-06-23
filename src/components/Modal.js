@@ -24,7 +24,10 @@ const Modal = (props) => {
       className={`modal ${isOpenModal && "is--open"}`}
       onClick={handleCloseModal}
     >
-      <div className="modal-container" onClick={handleClickModal}>
+      <div
+        className="modal-container modal-container--new-task-movil"
+        onClick={handleClickModal}
+      >
         <div>
           <Textarea
             classes="modal-input"
@@ -61,10 +64,12 @@ const Modal = (props) => {
           <div>
             <button
               className={`button ${
-                values.task.length ? "button--active" : "button--disable"
+                values.task.length || values.details.length
+                  ? "button--active"
+                  : "button--disable"
               } `}
-              onClick={handleSaveTask}
               disabled={!values.task.length}
+              onClick={handleSaveTask}
             >
               Guardar
             </button>

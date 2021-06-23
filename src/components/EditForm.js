@@ -1,18 +1,40 @@
 import "../styles/components/EditForm.css";
 import { useRef } from "react";
+import {
+  hanldeTaskCompleted,
+  handleTaskincomplete,
+} from "../services/firestoreTask";
 import Textarea from "./Textarea";
 
-const EditForm = ({ values, handleInputChange }) => {
-  const Ref = useRef(null);
+import { useHistory } from "react-router-dom";
+
+const EditForm = ({ values, state, handleInputChange }) => {
+  const history = useHistory();
+  const RefTitle = useRef(null);
+  const RefDetails = useRef(null);
+
+  const TaskCompleted = () => {
+    hanldeTaskCompleted(values);
+    history.push("/");
+  };
+
+  const TaskIcompleted = () => {
+    handleTaskincomplete(values);
+    history.push("/");
+  };
+
   return (
     <>
-      <p className="label">My List 1</p>
+      <p className={`label ${state.isCompleted ? "--gray" : ""}`}>My List 1</p>
       <Textarea
-        classes="modal-input"
+        classes={`modal-input ${
+          state.isCompleted ? "task-title--text-decoration" : ""
+        }`}
+        disabled={state.isCompleted}
         name="task"
         value={values.task}
         message="Ingresa un tìtulo"
-        inputRef={Ref}
+        inputRef={RefTitle}
         handleChange={handleInputChange}
       />
 
@@ -20,19 +42,29 @@ const EditForm = ({ values, handleInputChange }) => {
         <span className="material-icons icon --gray">sort</span>
         <Textarea
           classes="modal-input --small"
+          disabled={state.isCompleted}
           name="details"
           value={values.details}
           message="Agregar detalles"
-          inputRef={Ref}
+          inputRef={RefDetails}
           handleChange={handleInputChange}
         />
       </div>
-      <button
-        className="button button--active --bottom"
-        // onClick={() => console.log("hola")}
-      >
-        Marcar como completada
-      </button>
+      {state.isCompleted ? (
+        <button
+          className="button button--active --bottom --pointer"
+          onClick={TaskIcompleted}
+        >
+          Marcar como no completada
+        </button>
+      ) : (
+        <button
+          className="button button--active --bottom --pointer"
+          onClick={TaskCompleted}
+        >
+          Marcar como completada
+        </button>
+      )}
     </>
   );
 };
