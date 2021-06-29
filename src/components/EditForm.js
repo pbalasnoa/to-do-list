@@ -1,4 +1,3 @@
-import "../styles/components/EditForm.css";
 import { useRef } from "react";
 import {
   hanldeTaskCompleted,
@@ -7,8 +6,10 @@ import {
 import Textarea from "./Textarea";
 
 import { useHistory } from "react-router-dom";
+import useWindowDimensions from "../hooks/useWindowDimensions";
 
 const EditForm = ({ values, state, handleInputChange }) => {
+  const { width } = useWindowDimensions();
   const history = useHistory();
   const RefTitle = useRef(null);
   const RefDetails = useRef(null);
@@ -25,9 +26,8 @@ const EditForm = ({ values, state, handleInputChange }) => {
 
   return (
     <>
-      <p className={`label ${state.isCompleted ? "--gray" : ""}`}>My List 1</p>
       <Textarea
-        classes={`modal-input ${
+        classes={`input input-title-edit ${
           state.isCompleted ? "task-title--text-decoration" : ""
         }`}
         disabled={state.isCompleted}
@@ -41,7 +41,7 @@ const EditForm = ({ values, state, handleInputChange }) => {
       <div className="input-icon">
         <span className="material-icons icon --gray">sort</span>
         <Textarea
-          classes="modal-input --small"
+          classes="input input-detail-edit"
           disabled={state.isCompleted}
           name="details"
           value={values.details}
@@ -50,21 +50,23 @@ const EditForm = ({ values, state, handleInputChange }) => {
           handleChange={handleInputChange}
         />
       </div>
-      {state.isCompleted ? (
-        <button
-          className="button button--active --bottom --pointer"
-          onClick={TaskIcompleted}
-        >
-          Marcar como no completada
-        </button>
-      ) : (
-        <button
-          className="button button--active --bottom --pointer"
-          onClick={TaskCompleted}
-        >
-          Marcar como completada
-        </button>
-      )}
+      <div className={`${width < 600 ? "--bottom" : "--button-right"}`}>
+        {state.isCompleted ? (
+          <button
+            className="button button--active  --pointer"
+            onClick={TaskIcompleted}
+          >
+            Marcar como no completada
+          </button>
+        ) : (
+          <button
+            className="button button--active --pointer"
+            onClick={TaskCompleted}
+          >
+            Marcar como completada
+          </button>
+        )}
+      </div>
     </>
   );
 };

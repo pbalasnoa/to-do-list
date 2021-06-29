@@ -11,7 +11,9 @@ const Task = (props) => {
       {tasks.map((task) => (
         <div
           key={task.id}
-          className={` ${showTaskIncompleted ? "--hide" : "task-container"}`}
+          className={` ${
+            showTaskIncompleted ? "--hide" : "task-container --hover"
+          }`}
         >
           <div>
             {isCompleted ? (
@@ -26,6 +28,7 @@ const Task = (props) => {
             )}
           </div>
           <Link
+            style={{ width: "100%" }}
             to={{
               pathname: `/edit/${task.id}`,
               data: task,

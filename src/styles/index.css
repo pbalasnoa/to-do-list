@@ -1,3 +1,7 @@
+@import url("./components/Texts.css");
+@import url("./components/Input.css");
+@import url("./components/Button.css");
+
 /*
 Outside In
 1. Composición (position, float, clear, display)
@@ -53,25 +57,28 @@ a {
   color: var(--gray-500);
 }
 
+textarea {
+  font-family: "roboto-light";
+  font-size: 1rem;
+}
+
+textarea:disabled {
+  background-color: var(--white);
+  color: var(--gray-500);
+}
+
+textarea:disabled.task-title--text-decoration {
+  color: var(--gray-600);
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
 .container {
   margin: 1rem 1rem 5.5rem;
-}
-
-.button {
-  font-size: 1rem;
-  border: none;
-  background: none;
-  letter-spacing: 1px;
-  text-align: right;
-}
-
-.button--active {
-  color: var(--blue-500);
-  font-family: "roboto-medium";
-}
-
-.button--disable {
-  color: var(--blue-200);
 }
 
 .icon {
@@ -90,22 +97,47 @@ a {
   color: var(--blue-500);
 }
 
+.--margin-left {
+  margin-left: 1rem;
+}
+
 .--pointer {
   cursor: pointer;
 }
 
-.--bottom {
-  position: fixed;
-  bottom: 16px;
-  right: 100px;
-  transform: translateX(100px);
-  margin-right: 16px;
+.--border-round {
+  width: 100%;
+  border-radius: 1.25rem;
 }
 
-.--small {
-  margin-block: 0;
-  font-family: "roboto-regular";
-  font-size: 0.9rem;
+.--bottom {
+  position: absolute;
+  bottom: 16px;
+  right: 10px;
+}
+
+.--button-right {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 2rem;
+}
+
+.--bottom-center {
+  position: sticky;
+  top: 0;
+  bottom: 8px;
+  width: 600px;
+  margin: 1rem auto 0;
+  background-color: var(--white);
+}
+
+.center {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: fit-content;
 }
 
 .divider {
@@ -115,18 +147,10 @@ a {
   background-color: rgba(0, 0, 0, 0.2);
 }
 
-.title-completed {
-  font-family: "roboto-medium";
-  font-weight: 500;
-  color: var(--gray-900);
-  margin-bottom: 1.5rem;
-}
-
-textarea:disabled {
-  background-color: var(--white);
-  color: var(--gray-500);
-}
-
-textarea:disabled.task-title--text-decoration {
-  color: var(--gray-600);
+@media (min-width: 599px) {
+  .container {
+    max-width: 600px;
+    padding-inline: 1rem;
+    margin: 1rem auto 2rem;
+  }
 }

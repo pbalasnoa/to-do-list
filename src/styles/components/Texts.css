@@ -1,0 +1,49 @@
+.label {
+  font-size: 0.875rem;
+}
+
+.text--500 {
+  font-family: "roboto-medium";
+}
+
+.text--400 {
+  font-family: "roboto-regular";
+}
+
+.task-completed-title {
+  font-family: "roboto-medium";
+  font-weight: 500;
+  color: var(--gray-900);
+  margin-bottom: 1.5rem;
+}
+
+.input-title-edit {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.input-detail-edit {
+  font-size: 1rem;
+}
+
+.header__title {
+  font-family: "roboto-light";
+  font-size: 1.5rem;
+  color: var(--gray-900);
+}
+
+.task-title {
+  color: var(--gray-900);
+  font-weight: bold;
+}
+
+.task-title--text-decoration {
+  text-decoration: line-through;
+}
+
+.task-subtitle {
+  font-size: 0.9rem;
+  color: var(--gray-500);
+  font-weight: 700;
+  padding-top: 0.5rem;
+}

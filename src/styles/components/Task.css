@@ -2,6 +2,12 @@
   display: flex;
   align-items: center;
   margin-bottom: 1.1rem;
+  padding: 0.5rem;
+}
+
+.container-task {
+  display: flex;
+  justify-content: space-between;
 }
 
 .--hide {
@@ -19,18 +25,8 @@
   min-width: 240px;
 }
 
-.task-title {
-  color: var(--gray-900);
-  font-weight: bold;
-}
-
-.task-title--text-decoration {
-  text-decoration: line-through;
-}
-
-.task-subtitle {
-  font-size: 0.9rem;
-  color: var(--gray-500);
-  font-weight: 700;
-  padding-top: 0.5rem;
+@media (min-width: 599px) {
+  .task-container:hover {
+    background-color: var(--blue-200);
+  }
 }

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Header from "../components/Header";
+import ToolsTask from "../components/ToolsTask";
 import Task from "../components/Task";
 import Modal from "../components/Modal";
 import ModalOptions from "../components/ModalOptions";
@@ -7,6 +8,7 @@ import BottomAppBar from "../components/BottomAppBar";
 
 import useModal from "../hooks/useModal";
 import { useForm } from "../hooks/useForm";
+import useWindowDimensions from "../hooks/useWindowDimensions";
 
 import {
   watchTask,
@@ -21,6 +23,8 @@ const initialValues = {
 };
 
 function HomeTask() {
+  console.log("dimensiones ", useWindowDimensions());
+  const { width } = useWindowDimensions();
   const [dataTask, setDataTask] = useState(null);
   const [taskCompleted, setTaskCompleted] = useState([]);
   const { values, setValues, handleInputChange } = useForm(initialValues);
@@ -61,27 +65,35 @@ function HomeTask() {
   return (
     <div className="container">
       <Header />
+      {width > 599 && (
+        <ToolsTask
+          deleteTask={deleteTask}
+          taskCompleted={taskCompleted}
+          openModal={openModal}
+        />
+      )}
+
       {dataTask && (
         <Task tasks={dataTask} hanldeTaskCompleted={hanldeTaskCompleted} />
       )}
 
       {taskCompleted.length ? (
-        <>
+        <div className={`${width > 600 && "--bottom-center"}`}>
           <div className="divider"></div>
           <div className="container-task-completed">
-            <h4 className="title-completed">
+            <h4 className="task-completed-title">
               Completadas {`(${taskCompleted.length})`}
             </h4>
             {showTaskIncompleted ? (
               <span
-                className={"material-icons icon --gray --pointer"}
+                className={"material-icons --gray --pointer"}
                 onClick={handleShowTaskIncompleted}
               >
                 expand_more
               </span>
             ) : (
               <span
-                className={"material-icons icon --gray --pointer"}
+                className={"material-icons --gray --pointer"}
                 onClick={handleShowTaskIncompleted}
               >
                 expand_less
@@ -93,7 +105,7 @@ function HomeTask() {
             isCompleted={true}
             showTaskIncompleted={showTaskIncompleted}
           />
-        </>
+        </div>
       ) : null}
       <Modal
         isOpenModal={isOpenModal}
@@ -108,7 +120,12 @@ function HomeTask() {
         taskCompleted={taskCompleted}
         deleteTask={deleteTask}
       />
-      <BottomAppBar openModal={openModal} openModalOptions={openModalOptions} />
+      {width < 600 && (
+        <BottomAppBar
+          openModal={openModal}
+          openModalOptions={openModalOptions}
+        />
+      )}
     </div>
   );
 }

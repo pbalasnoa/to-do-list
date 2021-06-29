@@ -1,0 +1,16 @@
+.input-icon {
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  height: 24px;
+  width: 100%;
+  margin-block: 2px;
+  padding-block: 10px;
+  border: none;
+}
+
+.input:focus {
+  outline: none;
+}

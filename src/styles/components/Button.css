@@ -1,0 +1,16 @@
+.button {
+  font-size: 1rem;
+  border: none;
+  background: none;
+  letter-spacing: 1px;
+  text-align: right;
+}
+
+.button--active {
+  color: var(--blue-500);
+  font-family: "roboto-medium";
+}
+
+.button--disable {
+  color: var(--blue-200);
+}

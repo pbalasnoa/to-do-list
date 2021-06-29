@@ -23,6 +23,9 @@ const EditTask = (props) => {
         handleDelete={handledeleteTask}
         handlePutTask={() => putTask(data.id, "task", values)}
       />
+      <p className={`text--500 ${state.isCompleted ? "--gray" : ""}`}>
+        My List 1
+      </p>
       <EditForm
         values={values}
         state={state}

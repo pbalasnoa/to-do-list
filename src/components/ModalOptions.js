@@ -6,10 +6,7 @@ const ModalOptions = (props) => {
   const handleClickModal = (e) => e.stopPropagation();
 
   const deleteAllTaskCompleted = (taskCompleted) => {
-    taskCompleted.map((task) =>
-      // console.log(task)
-      deleteTask(task.id, "taskCompleted")
-    );
+    taskCompleted.map((task) => deleteTask(task.id, "taskCompleted"));
     closeModal();
   };
 
@@ -18,9 +15,9 @@ const ModalOptions = (props) => {
       className={`modal ${isOpenModal && "is--open"}`}
       onClick={closeModal}
     >
-      <div className="modal-container" onClick={handleClickModal}>
+      <div className="modal-content modal__options" onClick={handleClickModal}>
         <button
-          className="button --small --pointer"
+          className="button label --pointer"
           onClick={() => deleteAllTaskCompleted(taskCompleted)}
         >
           Borrar todas las tareas completadas

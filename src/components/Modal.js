@@ -1,9 +1,10 @@
 import ReactDOM from "react-dom";
 import "../styles/components/Modal.css";
 
-import useModal from "../hooks/useModal";
 import Textarea from "./Textarea";
+import useModal from "../hooks/useModal";
 import { useFocusListen } from "../hooks/useFocus";
+import useWindowDimensions from "../hooks/useWindowDimensions";
 
 const Modal = (props) => {
   const { isOpenModal, closeModal, values, handleInputChange, handleSaveTask } =
@@ -12,6 +13,7 @@ const Modal = (props) => {
     useModal(false);
   const textareaRef = useFocusListen(showInputDetails);
   const inputRef = useFocusListen(isOpenModal);
+  const { width } = useWindowDimensions();
   const handleClickModal = (e) => e.stopPropagation();
 
   const handleCloseModal = () => {
@@ -25,12 +27,14 @@ const Modal = (props) => {
       onClick={handleCloseModal}
     >
       <div
-        className="modal-container modal-container--new-task-movil"
+        className={`modal-content modal-task__new-task ${
+          width > 600 && "center"
+        }`}
         onClick={handleClickModal}
       >
         <div>
           <Textarea
-            classes="modal-input"
+            classes="input"
             name="task"
             value={values.task}
             message="Nueva tarea"
@@ -40,7 +44,7 @@ const Modal = (props) => {
           {showInputDetails && (
             <Textarea
               type="text"
-              classes="modal-input --small"
+              classes="input label"
               name="details"
               value={values.details}
               message="Agregar detalles"
@@ -50,7 +54,7 @@ const Modal = (props) => {
             />
           )}
         </div>
-        <div className="modal-options-container">
+        <div className="modal-task__options">
           <div>
             <span
               className="material-icons icon"

@@ -6,7 +6,7 @@
   z-index: 10;
   width: 100%;
   min-height: 100vh;
-  background-color: rgba(0, 0, 0, 0.75);
+  background-color: rgba(0, 0, 0, 0.5);
   justify-content: center;
   align-items: center;
 }
@@ -15,48 +15,31 @@
   display: flex;
 }
 
-.modal-container {
+.modal-content {
   position: absolute;
   bottom: 0;
   left: 0;
-  padding: 1rem;
   width: 100%;
-  /* height: 168px; */
+  padding: 1rem 1rem 0;
   overflow-y: auto;
   background-color: white;
 }
 
-.modal-container--new-task-movil {
+.modal-task__new-task {
   min-height: 168px;
-  max-height: 400px;
-  margin-bottom: 1rem;
+  max-height: 500px;
+  padding-bottom: 3.5rem;
 }
 
-.modal-input {
-  height: 24px;
-  width: 100%;
-  margin-block: 2px;
-  padding-block: 10px;
-  font-family: "roboto-regular";
-  font-size: 1rem;
-  border: none;
-}
-
-.modal-input:focus {
-  outline: none;
-}
-
-.--flex {
-  display: flex;
-  align-items: flex-end;
-}
-
-.modal-options-container {
+.modal-task__options {
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 48px;
   width: 100%;
-  margin: 0.8rem 0 1.1rem;
-  /* outline: solid olive; */
+}
+
+.modal__options {
+  height: 7rem;
+  padding-bottom: 1rem;
 }
