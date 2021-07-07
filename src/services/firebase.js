@@ -1,15 +1,17 @@
 import firebase from "firebase/app";
 import "firebase/firestore";
+import "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBQmR7Ho3vmI5Ov8qkEsh2v3XDHq7BlV8U",
-  authDomain: "to-do-6fb08.firebaseapp.com",
-  projectId: "to-do-6fb08",
-  storageBucket: "to-do-6fb08.appspot.com",
-  messagingSenderId: "889037025569",
-  appId: "1:889037025569:web:93a7ab88bef6925babce60",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMIAN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
 };
 
 const fb = firebase.initializeApp(firebaseConfig);
-// export const auth = fb.auth();
 export const db = fb.firestore();
+export const auth = fb.auth();
+// export const google = new firebase.auth.GoogleAuthProvider()

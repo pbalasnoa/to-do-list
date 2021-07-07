@@ -11,6 +11,12 @@
   border: none;
 }
 
+.input-outline {
+  border-bottom: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: var(--gray-500);
+}
+
 .input:focus {
   outline: none;
 }

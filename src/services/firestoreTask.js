@@ -1,35 +1,63 @@
 import { db } from "../services/firebase";
 
-export const watchTask = (callback, collection) => {
-  const unsub = db.collection(collection).onSnapshot((snapshot) => {
-    const docs = [];
-    snapshot.forEach((doc) => {
-      docs.push({ ...doc.data(), id: doc.id });
+const refUser = db.collection("users");
+
+export const watcherTask = (callback, collection, userId) => {
+  const unsub = refUser
+    .doc(userId)
+    .collection(collection)
+    .onSnapshot((snapshot) => {
+      const docs = [];
+      snapshot.forEach((doc) => {
+        docs.push({ ...doc.data(), id: doc.id });
+      });
+      callback(docs);
     });
-    callback(docs);
-  });
   return unsub;
 };
 
-export const postTask = async (collection, values) => {
-  return await db.collection(`${collection}`).doc().set(values);
+export const getDeepCollection = async () => {
+  const data = await refUser
+    .doc("k9hZoC5GeTMbi64n9UpFgIQtd0p1")
+    .collection("taskUser")
+    .doc("IbByNxsXGN4HHC1j8NzF")
+    .get()
+    .then((data) => {
+      return data.data();
+    })
+    .catch((err) => {
+      console.error(err.message);
+    });
+  console.log("deep", data);
 };
 
-export const putTask = async (id, collection, values) => {
-  return await db.collection(`${collection}`).doc(id).update(values);
+export const postTask = async (collection, values, userId) => {
+  return await refUser
+    .doc(userId)
+    .collection(`${collection}`)
+    .doc()
+    .set(values);
 };
 
-export const deleteTask = async (id, collection) => {
-  await db.collection(collection).doc(id).delete();
+export const putTask = async (id, collection, values, userId) => {
+  return await refUser
+    .doc(userId)
+    .collection(`${collection}`)
+    .doc(id)
+    .update(values);
+};
+
+export const deleteTask = async (id, collection, userId) => {
+  await refUser.doc(userId).collection(collection).doc(id).delete();
   return true;
 };
 
-export const hanldeTaskCompleted = (task) => {
-  postTask("taskCompleted", task);
-  deleteTask(task.id, "task");
+export const hanldeTaskCompleted = (task, userId) => {
+  postTask("taskCompleted", task, userId);
+  deleteTask(task.id, "task", userId);
 };
 
-export const handleTaskincomplete = (task) => {
-  postTask("task", task);
-  deleteTask(task.id, "taskCompleted");
+export const handleTaskincomplete = (task, userId) => {
+  postTask("task", task, userId);
+  deleteTask(task.id, "taskCompleted", userId);
 };

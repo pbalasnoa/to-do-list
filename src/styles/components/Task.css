@@ -22,7 +22,7 @@
 .task-content {
   display: flex;
   flex-direction: column;
-  min-width: 240px;
+  /* min-width: 240px; */
 }
 
 @media (min-width: 599px) {

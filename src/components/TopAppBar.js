@@ -6,11 +6,11 @@ const TopAppBar = ({ id, state, handleDelete, handlePutTask }) => {
     <>
       <div className="top-bar">
         {state.isCompleted ? (
-          <span className="material-icons --gray">
+          <span className="material-icons">
             <Link to="/">arrow_back</Link>
           </span>
         ) : (
-          <span className="material-icons --gray" onClick={handlePutTask}>
+          <span className="material-icons" onClick={handlePutTask}>
             <Link to="/">arrow_back</Link>
           </span>
         )}

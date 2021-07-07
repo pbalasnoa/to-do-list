@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useContext, useRef } from "react";
 import {
   hanldeTaskCompleted,
   handleTaskincomplete,
@@ -8,19 +8,22 @@ import Textarea from "./Textarea";
 import { useHistory } from "react-router-dom";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 
+import AuthContext from "../context/AuthContext";
+
 const EditForm = ({ values, state, handleInputChange }) => {
+  const { user } = useContext(AuthContext);
   const { width } = useWindowDimensions();
   const history = useHistory();
   const RefTitle = useRef(null);
   const RefDetails = useRef(null);
 
   const TaskCompleted = () => {
-    hanldeTaskCompleted(values);
+    hanldeTaskCompleted(values, user.id);
     history.push("/");
   };
 
   const TaskIcompleted = () => {
-    handleTaskincomplete(values);
+    handleTaskincomplete(values, user.id);
     history.push("/");
   };
 

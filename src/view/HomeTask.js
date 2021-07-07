@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 import Header from "../components/Header";
 import ToolsTask from "../components/ToolsTask";
 import Task from "../components/Task";
@@ -10,8 +10,10 @@ import useModal from "../hooks/useModal";
 import { useForm } from "../hooks/useForm";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 
+import TaskContext from "../context/TaskContext";
+import AuthContext from "../context/AuthContext";
+
 import {
-  watchTask,
   postTask,
   hanldeTaskCompleted,
   deleteTask,
@@ -23,23 +25,18 @@ const initialValues = {
 };
 
 function HomeTask() {
-  console.log("dimensiones ", useWindowDimensions());
+  const { dataTask, dataTaskCompleted } = useContext(TaskContext);
+  const { user } = useContext(AuthContext);
   const { width } = useWindowDimensions();
-  const [dataTask, setDataTask] = useState(null);
-  const [taskCompleted, setTaskCompleted] = useState([]);
   const { values, setValues, handleInputChange } = useForm(initialValues);
   const [isOpenModal, setIsOpenModal, openModal, closeModal] = useModal(false);
-  const [
-    isOpenModalOptions,
-    setIsOpenModalOptions,
-    openModalOptions,
-    closeModalOptions,
-  ] = useModal(false);
+  const [isOpenModalOptions, , openModalOptions, closeModalOptions] =
+    useModal(false);
   const [showTaskIncompleted, setShowTaskIncompleted] = useModal(false);
 
-  const handleSaveTask = (e) => {
+  const handleSaveTask = async (e) => {
     e.preventDefault();
-    postTask("task", values);
+    await postTask("task", values, user.id);
     setValues(initialValues);
     setIsOpenModal(false);
   };
@@ -53,36 +50,23 @@ function HomeTask() {
     setShowTaskIncompleted(!showTaskIncompleted);
   };
 
-  useEffect(() => {
-    watchTask((task) => {
-      setDataTask(task);
-    }, "task");
-    watchTask((taskCompleted) => {
-      setTaskCompleted(taskCompleted);
-    }, "taskCompleted");
-  }, []);
-
   return (
     <div className="container">
       <Header />
       {width > 599 && (
-        <ToolsTask
-          deleteTask={deleteTask}
-          taskCompleted={taskCompleted}
-          openModal={openModal}
-        />
+        <ToolsTask deleteTask={deleteTask} openModal={openModal} />
       )}
 
       {dataTask && (
         <Task tasks={dataTask} hanldeTaskCompleted={hanldeTaskCompleted} />
       )}
 
-      {taskCompleted.length ? (
+      {dataTaskCompleted.length ? (
         <div className={`${width > 600 && "--bottom-center"}`}>
           <div className="divider"></div>
           <div className="container-task-completed">
             <h4 className="task-completed-title">
-              Completadas {`(${taskCompleted.length})`}
+              Completadas {`(${dataTaskCompleted.length})`}
             </h4>
             {showTaskIncompleted ? (
               <span
@@ -101,12 +85,13 @@ function HomeTask() {
             )}
           </div>
           <Task
-            tasks={taskCompleted}
+            tasks={dataTaskCompleted}
             isCompleted={true}
             showTaskIncompleted={showTaskIncompleted}
           />
         </div>
       ) : null}
+
       <Modal
         isOpenModal={isOpenModal}
         closeModal={handleCloseModal}
@@ -117,7 +102,6 @@ function HomeTask() {
       <ModalOptions
         isOpenModal={isOpenModalOptions}
         closeModal={closeModalOptions}
-        taskCompleted={taskCompleted}
         deleteTask={deleteTask}
       />
       {width < 600 && (

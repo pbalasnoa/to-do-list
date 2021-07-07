@@ -9,8 +9,7 @@ import useWindowDimensions from "../hooks/useWindowDimensions";
 const Modal = (props) => {
   const { isOpenModal, closeModal, values, handleInputChange, handleSaveTask } =
     props;
-  const [showInputDetails, setIsOpenModal, showDetails, closeDetails] =
-    useModal(false);
+  const [showInputDetails, , showDetails, closeDetails] = useModal(false);
   const textareaRef = useFocusListen(showInputDetails);
   const inputRef = useFocusListen(isOpenModal);
   const { width } = useWindowDimensions();

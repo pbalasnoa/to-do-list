@@ -1,0 +1,32 @@
+.opening-container {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-evenly; */
+  height: 100vh;
+}
+
+.img-container {
+  display: block;
+  margin: 0 auto;
+  padding-block: 3rem;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  padding-top: 2rem;
+  padding-bottom: 0.5rem;
+}
+
+.text {
+  display: flex;
+  justify-content: center;
+  padding-inline: 1rem;
+  text-align: center;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
