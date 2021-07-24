@@ -1,11 +1,11 @@
 import { Link, useHistory } from "react-router-dom";
+
 import Input from "../components/Input";
 
 import { useForm } from "../hooks/useForm";
-import { login } from "../services/auth";
+import useWindowDimensions from "../hooks/useWindowDimensions";
 
-import "../styles/components/SignUp.css";
-// import moduleName from '../hooks/useFocus
+import { login } from "../services/auth";
 
 const initialValues = {
   email: "",
@@ -14,6 +14,7 @@ const initialValues = {
 
 const Login = () => {
   const history = useHistory();
+  const { width: breakpointWidth } = useWindowDimensions();
   const { values, setValues, handleInputChange } = useForm(initialValues);
 
   const handleLogin = (e) => {
@@ -26,42 +27,53 @@ const Login = () => {
 
   return (
     <div className="container">
-      <span className="material-icons">
-        <Link to="/opening" className="--blue">
-          arrow_back
-        </Link>
-      </span>
-      <div className="opening-container">
-        <h1 className="title-signUp">Bienvenido!</h1>
-        <p>Inicia sesión para continuar</p>
-        <form onSubmit={handleLogin} className="form-signUp">
-          <div className="margin">
-            <Input
-              type="text"
-              classes="input input-outline"
-              name="email"
-              value={values.email}
-              message="Correo electrónico"
-              handleChange={handleInputChange}
-            />
+      <div className="item sm-align-center-box">
+        {breakpointWidth < 600 && (
+          <span className="align-left-column-box">
+            <Link to="/opening" className="material-icons icon">
+              arrow_back
+            </Link>
+          </span>
+        )}
+        <section className="item">
+          <div className="align-left-column-box">
+            <h1 className="my-1">Bienvenido!</h1>
+            <p>Inicia sesión para continuar</p>
           </div>
-          <div className="margin">
-            <Input
-              type="password"
-              classes="input input-outline"
-              name="password"
-              value={values.password}
-              message="Contraseña"
-              handleChange={handleInputChange}
-            />
-          </div>
+          <form onSubmit={handleLogin} className="align-left-column-box">
+            <div className="w-1  mt-1_25">
+              <Input
+                type="text"
+                classes="input--border-bottom"
+                name="email"
+                value={values.email}
+                message="Correo electrónico"
+                handleChange={handleInputChange}
+              />
+            </div>
+            <div className="w-1  mt-1_25">
+              <Input
+                type="password"
+                classes="input--border-bottom"
+                name="password"
+                value={values.password}
+                message="Contraseña"
+                handleChange={handleInputChange}
+              />
+            </div>
 
-          <div className="margin flex">
-            <button className="button button-regular" type="submit">
+            <button className="button button--contained mt-2" type="submit">
               Inciar sesión
             </button>
-          </div>
-        </form>
+
+            <p className="w-1 mt-2 --center-text">
+              ¿No tienes una cuenta?
+              <Link to="/signUp" className="font-regular --blue_500 pl-0_25">
+                Registrarse ya
+              </Link>
+            </p>
+          </form>
+        </section>
       </div>
     </div>
   );

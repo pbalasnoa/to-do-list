@@ -1,5 +1,3 @@
-import "../styles/components/Task.css";
-
 import { Link } from "react-router-dom";
 
 import AuthContext from "../context/AuthContext";
@@ -11,48 +9,45 @@ const Task = (props) => {
     props;
 
   return (
-    <>
+    <div className="align-left-column-box">
       {tasks?.map((task) => (
-        <div
+        <article
           key={task.id}
-          className={` ${
-            showTaskIncompleted ? "--hide" : "task-container --hover"
+          className={`w-1 align-center-box  p-1 shadow-effect ${
+            showTaskIncompleted ? "--hide" : ""
           }`}
         >
-          <div>
-            {isCompleted ? (
-              <span className="material-icons icon --blue">done</span>
-            ) : (
-              <span
-                className="material-icons icon --gray --pointer"
-                onClick={() => hanldeTaskCompleted(task, user.id)}
-              >
-                radio_button_unchecked
-              </span>
-            )}
-          </div>
+          {isCompleted ? (
+            <span className="material-icons icon --blue_500 pr-1">done</span>
+          ) : (
+            <span
+              className="material-icons icon --gray_500 pr-1"
+              onClick={() => hanldeTaskCompleted(task, user.id)}
+            >
+              radio_button_unchecked
+            </span>
+          )}
+
           <Link
-            style={{ width: "80%" }}
+            className="w-1 align-left-column-box"
             to={{
               pathname: `/edit/${task.id}`,
               data: task,
               state: { isCompleted: isCompleted },
             }}
           >
-            <div className="task-content">
-              <p
-                className={`task-title ${
-                  isCompleted && "task-title--text-decoration"
-                }`}
-              >
-                {task.task}
-              </p>
-              {task.details && <p className="task-subtitle">{task.details}</p>}
-            </div>
+            <p className={` ${isCompleted && "--text-decoration"} `}>
+              {task.task}
+            </p>
+            {task.details && (
+              <small className={` ${isCompleted && "--gray_500"} `}>
+                {task.details}
+              </small>
+            )}
           </Link>
-        </div>
+        </article>
       ))}
-    </>
+    </div>
   );
 };
 

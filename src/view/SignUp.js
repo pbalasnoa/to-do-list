@@ -1,8 +1,9 @@
-import { useForm } from "../hooks/useForm";
 import { Link, useHistory } from "react-router-dom";
 
 import Input from "../components/Input";
-import "../styles/components/SignUp.css";
+
+import { useForm } from "../hooks/useForm";
+import useWindowDimensions from "../hooks/useWindowDimensions";
 
 import { createUser } from "../services/auth";
 
@@ -15,9 +16,10 @@ const initialValues = {
 
 const SignUp = () => {
   const history = useHistory();
+  const { width: breakpointWidth } = useWindowDimensions();
   const { values, setValues, handleInputChange } = useForm(initialValues);
 
-  const signUp = (e) => {
+  const handleSignUp = (e) => {
     e.preventDefault();
     if (values.password !== values.confirmPassword)
       return console.log("Las contraseñas no coinciden");
@@ -28,63 +30,73 @@ const SignUp = () => {
 
   return (
     <div className="container">
-      <span className="material-icons">
-        <Link to="/opening" className="--blue">
-          arrow_back
-        </Link>
-      </span>
-      <div className="opening-container">
-        <div>
-          <h1 className="title-signUp">Hola!</h1>
-          <p>Crea una nueva cuenta</p>
-        </div>
-        <form onSubmit={signUp} className="form-signUp">
-          <div className="margin">
-            <Input
-              type="text"
-              classes="input input-outline"
-              name="nickName"
-              value={values.nickName}
-              message="Nombre de usuario"
-              handleChange={handleInputChange}
-            />
+      <div className="item sm-align-center-box">
+        {breakpointWidth < 600 && (
+          <span className="align-left-column-box">
+            <Link to="/opening" className="material-icons icon">
+              arrow_back
+            </Link>
+          </span>
+        )}
+        <section className="item">
+          <div className="align-left-column-box">
+            <h1 className="my-1">Hola!</h1>
+            <p>Crea una nueva cuenta</p>
           </div>
-          <div className="margin">
-            <Input
-              type="text"
-              classes="input input-outline"
-              name="email"
-              value={values.email}
-              message="Correo electrónico"
-              handleChange={handleInputChange}
-            />
-          </div>
-          <div className="margin">
-            <Input
-              type="password"
-              classes="input input-outline"
-              name="password"
-              value={values.password}
-              message="Contraseña"
-              handleChange={handleInputChange}
-            />
-          </div>
-          <div className="margin">
-            <Input
-              type="password"
-              classes="input input-outline"
-              name="confirmPassword"
-              value={values.confirmPassword}
-              message="Confirmar contraseña"
-              handleChange={handleInputChange}
-            />
-          </div>
-          <div className="margin flex">
-            <button className="button button-regular" type="submit">
+          <form onSubmit={handleSignUp} className="align-left-column-box">
+            <div className="w-1 mt-1_25">
+              <Input
+                type="text"
+                classes="input--border-bottom"
+                name="nickName"
+                value={values.nickName}
+                message="Nombre de usuario"
+                handleChange={handleInputChange}
+              />
+            </div>
+            <div className="w-1 mt-1_25">
+              <Input
+                type="text"
+                classes="input--border-bottom"
+                name="email"
+                value={values.email}
+                message="Correo electrónico"
+                handleChange={handleInputChange}
+              />
+            </div>
+            <div className="w-1 mt-1_25">
+              <Input
+                type="password"
+                classes="input--border-bottom"
+                name="password"
+                value={values.password}
+                message="Contraseña"
+                handleChange={handleInputChange}
+              />
+            </div>
+            <div className="w-1 mt-1_25">
+              <Input
+                type="password"
+                classes="input--border-bottom"
+                name="confirmPassword"
+                value={values.confirmPassword}
+                message="Confirmar contraseña"
+                handleChange={handleInputChange}
+              />
+            </div>
+
+            <button className="button button--contained mt-2" type="submit">
               Registrarse
             </button>
-          </div>
-        </form>
+
+            <p className="w-1 mt-2 --center-text">
+              ¿Ya tienes una cuenta?
+              <Link to="/login" className="font-regular --blue_500 pl-0_25">
+                Iniciar sesión
+              </Link>
+            </p>
+          </form>
+        </section>
       </div>
     </div>
   );

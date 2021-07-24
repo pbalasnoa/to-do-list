@@ -1,5 +1,4 @@
 import ReactDOM from "react-dom";
-import "../styles/components/Modal.css";
 
 import Textarea from "./Textarea";
 import useModal from "../hooks/useModal";
@@ -12,7 +11,7 @@ const Modal = (props) => {
   const [showInputDetails, , showDetails, closeDetails] = useModal(false);
   const textareaRef = useFocusListen(showInputDetails);
   const inputRef = useFocusListen(isOpenModal);
-  const { width } = useWindowDimensions();
+  const { width: breakpointWidth } = useWindowDimensions();
   const handleClickModal = (e) => e.stopPropagation();
 
   const handleCloseModal = () => {
@@ -26,14 +25,14 @@ const Modal = (props) => {
       onClick={handleCloseModal}
     >
       <div
-        className={`modal-content modal-task__new-task ${
-          width > 600 && "center"
+        className={`modal-content ${
+          breakpointWidth < 600 && "modal-task__new-task"
         }`}
         onClick={handleClickModal}
       >
-        <div>
+        <section>
           <Textarea
-            classes="input"
+            classes="input w-1 mb-1"
             name="task"
             value={values.task}
             message="Nueva tarea"
@@ -42,41 +41,36 @@ const Modal = (props) => {
           />
           {showInputDetails && (
             <Textarea
-              type="text"
-              classes="input label"
+              classes="input w-1 input--text-small"
               name="details"
               value={values.details}
               message="Agregar detalles"
               inputRef={textareaRef}
               handleChange={handleInputChange}
-              autoComplete="off"
             />
           )}
-        </div>
-        <div className="modal-task__options">
-          <div>
+        </section>
+        <div className="align-spaceBetween-box">
+          <div className="align-left-box w-1 py-0_7">
             <span
-              className="material-icons icon"
+              className="material-icons icon pr-1 --blue_500"
               onClick={showDetails}
               onTouchStart={showDetails}
             >
               sort
             </span>
-            <span className="material-icons icon">event_available</span>
+            <span className="material-icons icon --blue_500">
+              event_available
+            </span>
           </div>
-          <div>
-            <button
-              className={`button ${
-                values.task.length || values.details.length
-                  ? "button--active"
-                  : "button--disable"
-              } `}
-              disabled={!values.task.length}
-              onClick={handleSaveTask}
-            >
-              Guardar
-            </button>
-          </div>
+
+          <button
+            className=" button button--only-letter"
+            // disabled={!values.task.length}
+            onClick={handleSaveTask}
+          >
+            Guardar
+          </button>
         </div>
       </div>
     </section>,

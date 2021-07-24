@@ -1,10 +1,10 @@
 import { useContext } from "react";
-import "../styles/components/DropdownMenu.css";
 
 import TaskContext from "../context/TaskContext";
 
 const DropdownMenu = (props) => {
-  const { optionOne, deleteAllTaskCompleted } = props;
+  const { open, setOpen, optionOne, classes, deleteAllTaskCompleted } = props;
+  console.log(props);
   const { dataTaskCompleted } = useContext(TaskContext);
 
   function DropdownItem({ children }) {
@@ -19,10 +19,17 @@ const DropdownMenu = (props) => {
   }
 
   return (
-    <div className="dropdown">
-      <DropdownItem deleteAllTaskCompleted={deleteAllTaskCompleted}>
-        {optionOne}
-      </DropdownItem>
+    <div
+      className={``}
+      onClick={() => {
+        setOpen(false);
+      }}
+    >
+      <div className={`dropdown ${classes}`}>
+        <DropdownItem deleteAllTaskCompleted={deleteAllTaskCompleted}>
+          {optionOne}
+        </DropdownItem>
+      </div>
     </div>
   );
 };

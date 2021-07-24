@@ -40,11 +40,17 @@ export const postTask = async (collection, values, userId) => {
 };
 
 export const putTask = async (id, collection, values, userId) => {
-  return await refUser
-    .doc(userId)
-    .collection(`${collection}`)
-    .doc(id)
-    .update(values);
+  console.log("en putTask", values);
+  // console.log("try timestamp", this.props.firebase.serverValue.TIMESTAMP);
+  return await refUser.doc(userId).collection(`${collection}`).doc(id).update({
+    task: values.task,
+    details: values.details,
+  });
+  // return await refUser
+  //   .doc(userId)
+  //   .collection(`${collection}`)
+  //   .doc(id)
+  //   .update(values);
 };
 
 export const deleteTask = async (id, collection, userId) => {
@@ -53,6 +59,7 @@ export const deleteTask = async (id, collection, userId) => {
 };
 
 export const hanldeTaskCompleted = (task, userId) => {
+  console.log("handleTaskCompleted", task);
   postTask("taskCompleted", task, userId);
   deleteTask(task.id, "task", userId);
 };

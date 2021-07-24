@@ -11,30 +11,31 @@ const ToolsTask = ({ deleteTask, openModal }) => {
     taskCompleted.map((task) => deleteTask(task.id, "taskCompleted", user.id));
     setOpen(false);
   };
+
   return (
-    <div className="container-task">
+    <div className="relative py-1 align-spaceBetween-box">
       <div
-        className="task-container --pointer --border-round"
+        className="align-left-box w-1 py-0_3 shadow-effect shadow-effect--radius"
         onClick={openModal}
       >
-        <span className="material-icons icon --blue">add_task</span>
-        <p className="task-title --blue">Añadir una tarea</p>
+        <span className="material-icons icon px-1 --blue_500">add_task</span>
+        <p className="font-regular --blue_500">Añadir una tarea</p>
       </div>
-      <div>
-        <span
-          className="material-icons icon --gray-dark --pointer"
-          onClick={() => setOpen(!open)}
-        >
+
+      <div className=" relative align-center-box pr-1">
+        <span className="material-icons icon" onClick={() => setOpen(!open)}>
           more_vert
         </span>
-        {open && (
-          <DropdownMenu
-            open={open}
-            optionOne="Eliminar todas las tareas completadas"
-            deleteAllTaskCompleted={deleteAllTaskCompleted}
-          />
-        )}
       </div>
+      {open && (
+        <DropdownMenu
+          open={open}
+          setOpen={setOpen}
+          optionOne="Eliminar todas las tareas completadas"
+          classes="dropdown-toolsTask"
+          deleteAllTaskCompleted={deleteAllTaskCompleted}
+        />
+      )}
     </div>
   );
 };

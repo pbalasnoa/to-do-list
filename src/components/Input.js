@@ -10,17 +10,20 @@ const Input = (props) => {
     handleChange,
   } = props;
   return (
-    <input
-      type={type}
-      className={classes}
-      disabled={disabled}
-      name={name}
-      value={value}
-      placeholder={message}
-      ref={inputRef}
-      onChange={handleChange}
-      autoComplete="off"
-    />
+    <div className="input-box">
+      <input
+        type={type}
+        className={classes}
+        disabled={disabled}
+        name={name}
+        value={value}
+        ref={inputRef}
+        onChange={handleChange}
+        autoComplete="off"
+        placeholder=" "
+      />
+      <label className="input--label">{message}</label>
+    </div>
   );
 };
 

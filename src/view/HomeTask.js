@@ -27,7 +27,7 @@ const initialValues = {
 function HomeTask() {
   const { dataTask, dataTaskCompleted } = useContext(TaskContext);
   const { user } = useContext(AuthContext);
-  const { width } = useWindowDimensions();
+  const { width: breakpointWidth } = useWindowDimensions();
   const { values, setValues, handleInputChange } = useForm(initialValues);
   const [isOpenModal, setIsOpenModal, openModal, closeModal] = useModal(false);
   const [isOpenModalOptions, , openModalOptions, closeModalOptions] =
@@ -36,6 +36,7 @@ function HomeTask() {
 
   const handleSaveTask = async (e) => {
     e.preventDefault();
+    console.log("desde handleSaves", values);
     await postTask("task", values, user.id);
     setValues(initialValues);
     setIsOpenModal(false);
@@ -51,37 +52,30 @@ function HomeTask() {
   };
 
   return (
-    <div className="container">
-      <Header />
-      {width > 599 && (
-        <ToolsTask deleteTask={deleteTask} openModal={openModal} />
-      )}
+    <div className={`container ${breakpointWidth > 600 && "grid"}`}>
+      <div>
+        <Header />
+        {breakpointWidth > 599 && (
+          <ToolsTask deleteTask={deleteTask} openModal={openModal} />
+        )}
+      </div>
 
       {dataTask && (
         <Task tasks={dataTask} hanldeTaskCompleted={hanldeTaskCompleted} />
       )}
 
-      {dataTaskCompleted.length ? (
-        <div className={`${width > 600 && "--bottom-center"}`}>
-          <div className="divider"></div>
-          <div className="container-task-completed">
-            <h4 className="task-completed-title">
-              Completadas {`(${dataTaskCompleted.length})`}
-            </h4>
+      {dataTaskCompleted.length > 0 && (
+        <section className={`${breakpointWidth > 600 ? "" : "mb-4"}`}>
+          <hr />
+          <div
+            className="p-1 align-spaceBetween-box icon"
+            onClick={handleShowTaskIncompleted}
+          >
+            <h4>Completadas {`(${dataTaskCompleted.length})`}</h4>
             {showTaskIncompleted ? (
-              <span
-                className={"material-icons --gray --pointer"}
-                onClick={handleShowTaskIncompleted}
-              >
-                expand_more
-              </span>
+              <span className={"material-icons icon"}>expand_more</span>
             ) : (
-              <span
-                className={"material-icons --gray --pointer"}
-                onClick={handleShowTaskIncompleted}
-              >
-                expand_less
-              </span>
+              <span className={"material-icons icon"}>expand_less</span>
             )}
           </div>
           <Task
@@ -89,8 +83,8 @@ function HomeTask() {
             isCompleted={true}
             showTaskIncompleted={showTaskIncompleted}
           />
-        </div>
-      ) : null}
+        </section>
+      )}
 
       <Modal
         isOpenModal={isOpenModal}
@@ -104,7 +98,7 @@ function HomeTask() {
         closeModal={closeModalOptions}
         deleteTask={deleteTask}
       />
-      {width < 600 && (
+      {breakpointWidth < 600 && (
         <BottomAppBar
           openModal={openModal}
           openModalOptions={openModalOptions}

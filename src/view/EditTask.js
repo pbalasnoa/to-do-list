@@ -12,8 +12,9 @@ import AuthContext from "../context/AuthContext";
 const EditTask = (props) => {
   const history = useHistory();
   const { data, state } = props.location;
+  const { id, ...restData } = data;
   const { user } = useContext(AuthContext);
-  const { values, handleInputChange } = useForm(data);
+  const { values, handleInputChange } = useForm(restData);
 
   const handledeleteTask = async (id, collection) => {
     deleteTask(id, collection, user.id);
@@ -21,16 +22,23 @@ const EditTask = (props) => {
   };
 
   return (
-    <div className="container">
-      <TopAppBar
-        id={data.id}
-        state={state}
-        handleDelete={handledeleteTask}
-        handlePutTask={() => putTask(data.id, "task", values, user.id)}
-      />
-      <p className={`text--500 ${state.isCompleted ? "--gray" : ""}`}>
-        My List 1
-      </p>
+    <div className="container grid">
+      <div>
+        <TopAppBar
+          id={data.id}
+          state={state}
+          handleDelete={handledeleteTask}
+          handlePutTask={() => putTask(data.id, "task", values, user.id)}
+        />
+        <h1
+          className={`pl-1 normal-text --blue_500 ${
+            state.isCompleted && "--gray_500"
+          }`}
+        >
+          My List 1
+        </h1>
+      </div>
+
       <EditForm
         values={values}
         state={state}

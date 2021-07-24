@@ -1,32 +1,33 @@
-import "../styles/components/TopAppBar.css";
 import { Link } from "react-router-dom";
 
 const TopAppBar = ({ id, state, handleDelete, handlePutTask }) => {
   return (
-    <>
-      <div className="top-bar">
-        {state.isCompleted ? (
-          <span className="material-icons">
-            <Link to="/">arrow_back</Link>
-          </span>
-        ) : (
-          <span className="material-icons" onClick={handlePutTask}>
-            <Link to="/">arrow_back</Link>
-          </span>
-        )}
-
-        <span
-          className="material-icons --gray --pointer"
-          onClick={() => {
-            state.isCompleted
-              ? handleDelete(id, "taskCompleted")
-              : handleDelete(id, "task");
-          }}
-        >
-          delete
+    <div className="align-spaceBetween-box p-1">
+      {state.isCompleted ? (
+        <span>
+          <Link to="/" className="material-icons icon --gray_500">
+            arrow_back
+          </Link>
         </span>
-      </div>
-    </>
+      ) : (
+        <span onClick={handlePutTask}>
+          <Link to="/" className="material-icons icon --gray_500">
+            arrow_back
+          </Link>
+        </span>
+      )}
+
+      <span
+        className="material-icons icon --gray_500"
+        onClick={() => {
+          state.isCompleted
+            ? handleDelete(id, "taskCompleted")
+            : handleDelete(id, "task");
+        }}
+      >
+        delete
+      </span>
+    </div>
   );
 };
 

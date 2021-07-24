@@ -28,49 +28,52 @@ const EditForm = ({ values, state, handleInputChange }) => {
   };
 
   return (
-    <>
-      <Textarea
-        classes={`input input-title-edit ${
-          state.isCompleted ? "task-title--text-decoration" : ""
-        }`}
-        disabled={state.isCompleted}
-        name="task"
-        value={values.task}
-        message="Ingresa un tìtulo"
-        inputRef={RefTitle}
-        handleChange={handleInputChange}
-      />
-
-      <div className="input-icon">
-        <span className="material-icons icon --gray">sort</span>
+    <div className="grid-2row">
+      <div className="p-1">
         <Textarea
-          classes="input input-detail-edit"
+          classes={`w-1 mb-1 font-regular h2 ${
+            state.isCompleted && "--text-decoration"
+          }`}
           disabled={state.isCompleted}
-          name="details"
-          value={values.details}
-          message="Agregar detalles"
-          inputRef={RefDetails}
+          name="task"
+          value={values.task}
+          message="Ingresa un tìtulo"
+          inputRef={RefTitle}
           handleChange={handleInputChange}
         />
+        <div className="align-left-box">
+          <span className="material-icons icon --gray_500 pr-1">sort</span>
+          <Textarea
+            classes="w-1"
+            disabled={state.isCompleted}
+            name="details"
+            value={values.details}
+            message="Agregar detalles"
+            inputRef={RefDetails}
+            handleChange={handleInputChange}
+          />
+        </div>
       </div>
-      <div className={`${width < 600 ? "--bottom" : "--button-right"}`}>
+
+      <hr />
+      <div className="align-right-box">
         {state.isCompleted ? (
           <button
-            className="button button--active  --pointer"
+            className="button button--only-letter"
             onClick={TaskIcompleted}
           >
             Marcar como no completada
           </button>
         ) : (
           <button
-            className="button button--active --pointer"
+            className="button button--only-letter"
             onClick={TaskCompleted}
           >
             Marcar como completada
           </button>
         )}
       </div>
-    </>
+    </div>
   );
 };
 

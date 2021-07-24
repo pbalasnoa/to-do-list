@@ -2,7 +2,7 @@ import "../styles/components/BottomAppBar.css";
 
 const BottomAppBar = ({ openModal, openModalOptions }) => {
   return (
-    <div className="bottom-bar">
+    <div className="bottom-bar icon">
       {/* <div className="slider"></div> */}
       <div className="tabs">
         <div className="tab tab--left">
