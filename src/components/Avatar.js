@@ -1,16 +1,16 @@
 import DropdownMenu from "./DropdownMenu";
-import { logOut } from "../services/auth";
-import { useHistory } from "react-router";
+// import { logOut } from "../services/auth";
+// import { useHistory } from "react-router";
 import { useState } from "react";
 
 const Avatar = () => {
   const [open, setOpen] = useState(false);
-  const history = useHistory();
+  // const history = useHistory();
 
-  const handleLogOut = () => {
-    logOut();
-    history.push("/login");
-  };
+  // const handleLogOut = () => {
+  //   logOut();
+  //   history.push("/login");
+  // };
 
   return (
     <div className="relative">

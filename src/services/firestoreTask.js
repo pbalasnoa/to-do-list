@@ -1,4 +1,4 @@
-import { db } from "../services/firebase";
+import { fbFirestore, db } from "../services/firebase";
 
 const refUser = db.collection("users");
 
@@ -6,6 +6,7 @@ export const watcherTask = (callback, collection, userId) => {
   const unsub = refUser
     .doc(userId)
     .collection(collection)
+    .orderBy("createdAt", "desc")
     .onSnapshot((snapshot) => {
       const docs = [];
       snapshot.forEach((doc) => {
@@ -16,41 +17,49 @@ export const watcherTask = (callback, collection, userId) => {
   return unsub;
 };
 
-export const getDeepCollection = async () => {
-  const data = await refUser
-    .doc("k9hZoC5GeTMbi64n9UpFgIQtd0p1")
-    .collection("taskUser")
-    .doc("IbByNxsXGN4HHC1j8NzF")
-    .get()
-    .then((data) => {
-      return data.data();
-    })
-    .catch((err) => {
-      console.error(err.message);
-    });
-  console.log("deep", data);
-};
+export const postTask = async (collection, values, userId, date = null) => {
+  if (date === null || values.hasOwnProperty("date")) {
+    return await refUser
+      .doc(userId)
+      .collection(`${collection}`)
+      .doc()
+      .set({
+        createdAt: fbFirestore.FieldValue.serverTimestamp(),
+        ...values,
+      });
+  }
 
-export const postTask = async (collection, values, userId) => {
-  return await refUser
-    .doc(userId)
-    .collection(`${collection}`)
-    .doc()
-    .set(values);
-};
-
-export const putTask = async (id, collection, values, userId) => {
-  console.log("en putTask", values);
-  // console.log("try timestamp", this.props.firebase.serverValue.TIMESTAMP);
-  return await refUser.doc(userId).collection(`${collection}`).doc(id).update({
+  return await refUser.doc(userId).collection(`${collection}`).doc().set({
+    createdAt: fbFirestore.FieldValue.serverTimestamp(),
     task: values.task,
     details: values.details,
+    date: date,
   });
-  // return await refUser
-  //   .doc(userId)
-  //   .collection(`${collection}`)
-  //   .doc(id)
-  //   .update(values);
+};
+
+export const putTaskDate = async (id, collection, userId, date) => {
+  return await refUser.doc(userId).collection(`${collection}`).doc(id).update({
+    date: date,
+  });
+};
+
+export const putTask = async (id, collection, values, userId, date = null) => {
+  if (date === null) {
+    return await refUser
+      .doc(userId)
+      .collection(`${collection}`)
+      .doc(id)
+      .update({
+        createdAt: fbFirestore.FieldValue.serverTimestamp(),
+        ...values,
+      });
+  }
+  return await refUser.doc(userId).collection(`${collection}`).doc(id).update({
+    createdAt: fbFirestore.FieldValue.serverTimestamp(),
+    task: values.task,
+    details: values.details,
+    date: date,
+  });
 };
 
 export const deleteTask = async (id, collection, userId) => {
@@ -58,13 +67,14 @@ export const deleteTask = async (id, collection, userId) => {
   return true;
 };
 
-export const hanldeTaskCompleted = (task, userId) => {
-  console.log("handleTaskCompleted", task);
-  postTask("taskCompleted", task, userId);
-  deleteTask(task.id, "task", userId);
+export const toggleTask = (id, collection, values, userId) => {
+  postTask(collection, values, userId);
+  if (collection === "task") return deleteTask(id, "taskCompleted", userId);
+  deleteTask(id, "task", userId);
 };
 
-export const handleTaskincomplete = (task, userId) => {
-  postTask("task", task, userId);
-  deleteTask(task.id, "taskCompleted", userId);
+export const deleteDateTask = async (id, collection, userId) => {
+  return await refUser.doc(userId).collection(collection).doc(id).update({
+    date: fbFirestore.FieldValue.delete(),
+  });
 };

@@ -10,7 +10,7 @@ const TopAppBar = ({ id, state, handleDelete, handlePutTask }) => {
           </Link>
         </span>
       ) : (
-        <span onClick={handlePutTask}>
+        <span onClick={() => handlePutTask(id)}>
           <Link to="/" className="material-icons icon --gray_500">
             arrow_back
           </Link>

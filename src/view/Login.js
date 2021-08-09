@@ -19,7 +19,6 @@ const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    console.log("boton de login", values.email, values.password);
     login(values.email, values.password);
     setValues(initialValues);
     history.push("/");

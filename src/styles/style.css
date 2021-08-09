@@ -31,13 +31,16 @@
 
 :root {
   --white: #fff;
+  --gray-300: #e0e0e0;
   --gray-500: #9e9e9e;
   --gray-600: #757575;
   --gray-800: #424242;
   --gray-900: #212121;
+  --gray-text: #5f6368;
   --blue-200: #dbe6fd;
   --blue-500: #47597e;
   --blue-900: #293b5f;
+  --red-500: #d93025;
 
   --black-trans-02: rgba(0, 0, 0, 0.2);
   --blue-trans-04: rgba(219, 230, 253, 0.4);
@@ -102,8 +105,8 @@ li {
 }
 
 small {
-  font-size: 0.75rem;
-  color: var(--gray-800);
+  font-size: 0.9rem;
+  color: var(--gray-text);
 }
 
 ul {
@@ -113,7 +116,6 @@ ul {
 }
 
 hr {
-  /* margin: 1rem auto; */
   width: 100%;
   border: 0.5px solid var(--black-trans-02);
 }
@@ -130,7 +132,7 @@ picture {
 button,
 input,
 textarea {
-  font-family: inherit;
+  font-family: var(--roboto-regular);
   font-size: 1rem;
   border: none;
   background: none;
@@ -146,7 +148,7 @@ input[type="submit"] {
 
 *[disabled] {
   cursor: default;
-  color: var(--gray-500);
+  color: var(--gray-300);
   background-color: #ddd;
 }
 
@@ -155,7 +157,16 @@ textarea {
 }
 
 textarea:disabled {
+  color: var(--gray-300);
   background-color: var(--white);
+}
+
+textarea::placeholder {
+  color: var(--gray-300);
+}
+
+textarea[class~="--text-decoration"] {
+  color: var(--gray-500);
 }
 
 input:focus,
@@ -166,6 +177,10 @@ textarea:focus {
 ::selection {
   color: var(--white);
   background-color: var(--blue-500);
+}
+
+span[class~="--cursor-default"] {
+  cursor: default;
 }
 
 /* -------------------------- */
@@ -179,6 +194,18 @@ textarea:focus {
 
 .--gray_500 {
   color: var(--gray-500);
+}
+
+.--gray_300 {
+  color: var(--gray-300);
+}
+
+.--gray_text {
+  color: var(--gray-text);
+}
+
+.--red_500 {
+  color: var(--red-500);
 }
 
 /* -------------------------- */
@@ -198,6 +225,10 @@ textarea:focus {
 
 .h2 {
   font-size: 1.25rem;
+}
+
+.small {
+  font-size: 0.9rem;
 }
 
 .normal-text {
@@ -220,6 +251,10 @@ textarea:focus {
 .item {
   display: block;
   padding: 1rem;
+}
+
+.block {
+  display: block;
 }
 
 .align-center-box {
@@ -314,6 +349,14 @@ textarea:focus {
   margin-block: 1rem;
 }
 
+.mt-0_3 {
+  margin-top: 0.3rem;
+}
+
+.mt-0_5 {
+  margin-top: 0.5rem;
+}
+
 .mt-1 {
   margin-top: 1rem;
 }
@@ -328,6 +371,10 @@ textarea:focus {
 
 .mt-2_5 {
   margin-top: 2.5rem;
+}
+
+.mb-0_5 {
+  margin-bottom: 0.5rem;
 }
 
 .mb-1 {
@@ -383,6 +430,11 @@ textarea:focus {
 .button--regular {
   border: 1px solid var(--blue-900);
   border-radius: 0.5rem;
+}
+
+.button--disabled {
+  color: var(--gray-300);
+  background-color: white;
 }
 
 .input--border-bottom {
@@ -521,6 +573,26 @@ input:not(:placeholder-shown) {
 
 .menu-item:hover {
   background-color: var(--blue-200);
+}
+
+.react-datepicker__input-container {
+  display: none;
+}
+
+.date-text {
+  width: max-content;
+  padding: 0.2rem 0.9rem;
+  border: 1.5px solid var(--gray-500);
+  border-radius: 50px;
+  font-family: var(--roboto-medium);
+}
+
+.date-text::first-letter {
+  text-transform: uppercase;
+}
+
+.date-text__disable {
+  border-color: var(--gray-300);
 }
 
 /* -------------------------- */

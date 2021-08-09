@@ -13,11 +13,7 @@ import useWindowDimensions from "../hooks/useWindowDimensions";
 import TaskContext from "../context/TaskContext";
 import AuthContext from "../context/AuthContext";
 
-import {
-  postTask,
-  hanldeTaskCompleted,
-  deleteTask,
-} from "../services/firestoreTask";
+import { postTask, toggleTask, deleteTask } from "../services/firestoreTask";
 
 const initialValues = {
   task: "",
@@ -34,10 +30,9 @@ function HomeTask() {
     useModal(false);
   const [showTaskIncompleted, setShowTaskIncompleted] = useModal(false);
 
-  const handleSaveTask = async (e) => {
+  const handleSaveTask = async (e, date) => {
     e.preventDefault();
-    console.log("desde handleSaves", values);
-    await postTask("task", values, user.id);
+    await postTask("task", values, user.id, date);
     setValues(initialValues);
     setIsOpenModal(false);
   };
@@ -60,9 +55,7 @@ function HomeTask() {
         )}
       </div>
 
-      {dataTask && (
-        <Task tasks={dataTask} hanldeTaskCompleted={hanldeTaskCompleted} />
-      )}
+      {dataTask && <Task tasks={dataTask} toggleTask={toggleTask} />}
 
       {dataTaskCompleted.length > 0 && (
         <section className={`${breakpointWidth > 600 ? "" : "mb-4"}`}>
