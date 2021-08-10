@@ -547,6 +547,7 @@ input:not(:placeholder-shown) {
   position: absolute;
   right: 0;
   transform: translateX(-8%);
+  min-width: 250px;
   width: max-content;
   padding-block: 1rem;
   background-color: var(--white);
@@ -613,5 +614,9 @@ input:not(:placeholder-shown) {
 
   .sm-w-08 {
     width: 80%;
+  }
+
+  .dropdown {
+    min-width: 320px;
   }
 }

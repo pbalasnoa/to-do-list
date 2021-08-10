@@ -2,12 +2,15 @@ import { useContext, useState } from "react";
 import DropdownMenu from "./DropdownMenu";
 
 import AuthContext from "../context/AuthContext";
+import TaskContext from "../context/TaskContext";
 
 const ToolsTask = ({ deleteTask, openModal }) => {
   const [open, setOpen] = useState(false);
   const { user } = useContext(AuthContext);
+  const { dataTaskCompleted } = useContext(TaskContext);
 
   const deleteAllTaskCompleted = (taskCompleted) => {
+    console.log(taskCompleted);
     taskCompleted.map((task) => deleteTask(task.id, "taskCompleted", user.id));
     setOpen(false);
   };
@@ -31,9 +34,14 @@ const ToolsTask = ({ deleteTask, openModal }) => {
         <DropdownMenu
           open={open}
           setOpen={setOpen}
-          optionOne="Eliminar todas las tareas completadas"
           classes="dropdown-toolsTask"
-          deleteAllTaskCompleted={deleteAllTaskCompleted}
+          items={[
+            {
+              nameItem: "Eliminar todas las tareas completadas",
+              "Eliminar todas las tareas completadas": () =>
+                deleteAllTaskCompleted(dataTaskCompleted),
+            },
+          ]}
         />
       )}
     </div>

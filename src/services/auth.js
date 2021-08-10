@@ -38,15 +38,30 @@ export const logOut = () => {
 export const watcherUser = (callback) => {
   auth.onAuthStateChanged((user) => {
     if (user && !user.isAnonymous) {
-      callback({
-        id: user.uid,
-        email: user.email,
-        displayName: user.displayName,
-      });
-      // console.log(user);
+      let nickName, avatar;
+      db.collection("users")
+        .doc(user.uid)
+        .get()
+        .then((doc) => {
+          const data = doc.data();
+          nickName = data.displayName;
+          avatar = data.avatar;
+          callback({
+            id: user.uid,
+            email: user.email,
+            nickName,
+            avatar,
+          });
+        });
     } else {
       console.log("No hay usuario logueado");
       callback(null);
     }
+  });
+};
+
+export const getProfileAvatar = (userId, image) => {
+  db.collection("users").doc(userId).update({
+    avatar: image,
   });
 };
