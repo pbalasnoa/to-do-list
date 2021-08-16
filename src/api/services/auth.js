@@ -5,15 +5,18 @@ export const createUser = (email, password) => {
   auth
     .createUserWithEmailAndPassword(email, password)
     .then((cred) => {
-      return db
-        .collection("users")
-        .doc(cred.user.uid)
-        .set({
-          nickName: "hola",
-        })
-        .catch((err) => {
-          console.error(err.menssage);
-        });
+      return {
+        data: db
+          .collection("users")
+          .doc(cred.user.uid)
+          .set({
+            avatar: "",
+          })
+          .catch((err) => {
+            console.error(err.menssage);
+          }),
+        status: "ok",
+      };
     })
     .catch((error) => {
       console.error(error.menssage);
@@ -38,18 +41,15 @@ export const logOut = () => {
 export const watcherUser = (callback) => {
   auth.onAuthStateChanged((user) => {
     if (user && !user.isAnonymous) {
-      let nickName, avatar;
       db.collection("users")
         .doc(user.uid)
         .get()
         .then((doc) => {
           const data = doc.data();
-          nickName = data.displayName;
-          avatar = data.avatar;
+          const avatar = data.avatar;
           callback({
             id: user.uid,
             email: user.email,
-            nickName,
             avatar,
           });
         });

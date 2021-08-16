@@ -27,7 +27,7 @@ const formatDate = (entryDate) => {
   };
 };
 
-const useHandleDate = (entryDate) => {
+const handleDate = (entryDate) => {
   const { compareDate, taskDateWithFormat, distanceToNowDate } =
     formatDate(entryDate);
 
@@ -36,4 +36,4 @@ const useHandleDate = (entryDate) => {
   return ["Hoy", "dateToday"];
 };
 
-export default useHandleDate;
+export default handleDate;

@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 
-import { watcherTask } from "../services/firestoreTask";
-import { watcherUser } from "../services/auth";
+import { watcherTask } from "../api/services/firestoreTask";
+import { watcherUser } from "../api/services/auth";
 
 const Context = createContext({});
 

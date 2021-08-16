@@ -9,6 +9,8 @@ import Opening from "./view/Opening";
 import Login from "./view/Login";
 import SignUp from "./view/SignUp";
 
+import Loader from "./components/Loader";
+
 import Root from "./components/Root";
 import GuardRoute from "./components/GuardRoute";
 
@@ -32,6 +34,7 @@ function App() {
                 path="/signUp"
                 component={SignUp}
               />
+              <GuardRoute type="public" exact path="/loa" component={Loader} />
               <GuardRoute type="private" exact path="/" component={HomeTask} />
               <GuardRoute
                 type="private"

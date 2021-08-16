@@ -1,16 +1,9 @@
-import { useContext } from "react";
-
-import TaskContext from "../context/TaskContext";
-
 const DropdownMenu = (props) => {
-  const { open, setOpen, items, classes } = props;
-  // console.log("props del menu", props);
-  // console.log("desde dropd", items);
-  // const { dataTaskCompleted } = useContext(TaskContext);
+  const { setOpen, items, classes } = props;
 
   return (
     <div
-      className={``}
+      className={`dropdown-background`}
       onClick={() => {
         setOpen(false);
       }}
@@ -18,11 +11,14 @@ const DropdownMenu = (props) => {
       <div className={`dropdown ${classes}`}>
         {items.map((item) => (
           <div
-            className="menu-item --pointer"
+            className="menu-item align-left-box"
             onClick={() => item[`${item.nameItem}`]()}
             key={item.nameItem}
           >
-            <p className="text--400 --margin-left">{item.nameItem}</p>
+            <div className="box-icon align-center-box">
+              <span class="material-icons icon">{item.icon}</span>
+            </div>
+            <p className="text--400 --margin-left p-0_5">{item.nameItem}</p>
           </div>
         ))}
       </div>

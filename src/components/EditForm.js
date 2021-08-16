@@ -8,7 +8,7 @@ import DatePicker, { registerLocale } from "react-datepicker";
 import es from "date-fns/locale/es";
 import format from "date-fns/format";
 
-import { putTaskDate, deleteDateTask } from "../services/firestoreTask";
+import { putTaskDate, deleteDateTask } from "../api/services/firestoreTask";
 
 registerLocale("es", es);
 

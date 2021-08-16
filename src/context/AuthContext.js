@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { watcherUser } from "../services/auth";
+import { watcherUser } from "../api/services/auth";
 
 const AuthContext = createContext();
 

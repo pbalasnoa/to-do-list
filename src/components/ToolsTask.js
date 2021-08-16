@@ -10,7 +10,6 @@ const ToolsTask = ({ deleteTask, openModal }) => {
   const { dataTaskCompleted } = useContext(TaskContext);
 
   const deleteAllTaskCompleted = (taskCompleted) => {
-    console.log(taskCompleted);
     taskCompleted.map((task) => deleteTask(task.id, "taskCompleted", user.id));
     setOpen(false);
   };
@@ -40,6 +39,7 @@ const ToolsTask = ({ deleteTask, openModal }) => {
               nameItem: "Eliminar todas las tareas completadas",
               "Eliminar todas las tareas completadas": () =>
                 deleteAllTaskCompleted(dataTaskCompleted),
+              icon: "delete",
             },
           ]}
         />

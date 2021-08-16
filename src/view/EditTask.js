@@ -3,7 +3,7 @@ import { useContext } from "react";
 import TopAppBar from "../components/TopAppBar";
 import EditForm from "../components/EditForm";
 
-import { putTask, deleteTask, toggleTask } from "../services/firestoreTask";
+import { putTask, deleteTask, toggleTask } from "../api/services/firestoreTask";
 import { useHistory } from "react-router-dom";
 import { useForm } from "../hooks/useForm";
 

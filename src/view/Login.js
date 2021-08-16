@@ -5,7 +5,7 @@ import Input from "../components/Input";
 import { useForm } from "../hooks/useForm";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 
-import { login } from "../services/auth";
+import { login } from "../api/services/auth";
 
 const initialValues = {
   email: "",

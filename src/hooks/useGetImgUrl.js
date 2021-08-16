@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { fbStorage } from "../services/firebase";
+import { fbStorage } from "../api/services/firebase";
 
 const useGetImgUrl = (image) => {
   const [imgURL, setImgURL] = useState([]);

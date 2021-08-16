@@ -1,12 +1,11 @@
 import { useContext, useEffect, useState, useRef } from "react";
 import DropdownMenu from "./DropdownMenu";
-import { logOut } from "../services/auth";
 import { useHistory } from "react-router";
+import { getProfileAvatar, logOut } from "../api/services/auth";
 
 import AuthContext from "../context/AuthContext";
 
 import useGetImgUrl from "../hooks/useGetImgUrl";
-import { getProfileAvatar } from "../services/auth";
 
 const Avatar = () => {
   const { user } = useContext(AuthContext);
@@ -69,10 +68,12 @@ const Avatar = () => {
             {
               nameItem: "Cerrar sesión",
               "Cerrar sesión": handleLogOut,
+              icon: "logout",
             },
             {
               nameItem: "Cambiar foto",
               "Cambiar foto": () => refFileDialog.current.click(),
+              icon: "camera_enhance",
             },
           ]}
         />

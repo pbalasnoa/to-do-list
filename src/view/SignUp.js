@@ -5,7 +5,7 @@ import Input from "../components/Input";
 import { useForm } from "../hooks/useForm";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 
-import { createUser } from "../services/auth";
+import { createUser } from "../api/services/auth";
 
 const initialValues = {
   nickName: "",
@@ -44,7 +44,7 @@ const SignUp = () => {
             <p>Crea una nueva cuenta</p>
           </div>
           <form onSubmit={handleSignUp} className="align-left-column-box">
-            <div className="w-1 mt-1_25">
+            {/* <div className="w-1 mt-1_25">
               <Input
                 type="text"
                 classes="input--border-bottom"
@@ -53,11 +53,11 @@ const SignUp = () => {
                 message="Nombre de usuario"
                 handleChange={handleInputChange}
               />
-            </div>
+            </div> */}
             <div className="w-1 mt-1_25">
               <Input
                 type="text"
-                classes="input--border-bottom"
+                classes="input--border-bottom user"
                 name="email"
                 value={values.email}
                 message="Correo electrónico"
@@ -67,7 +67,7 @@ const SignUp = () => {
             <div className="w-1 mt-1_25">
               <Input
                 type="password"
-                classes="input--border-bottom"
+                classes="input--border-bottom user"
                 name="password"
                 value={values.password}
                 message="Contraseña"
@@ -77,7 +77,7 @@ const SignUp = () => {
             <div className="w-1 mt-1_25">
               <Input
                 type="password"
-                classes="input--border-bottom"
+                classes="input--border-bottom user"
                 name="confirmPassword"
                 value={values.confirmPassword}
                 message="Confirmar contraseña"

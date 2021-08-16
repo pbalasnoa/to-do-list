@@ -13,7 +13,7 @@ import useWindowDimensions from "../hooks/useWindowDimensions";
 import TaskContext from "../context/TaskContext";
 import AuthContext from "../context/AuthContext";
 
-import { postTask, toggleTask, deleteTask } from "../services/firestoreTask";
+import { postTask, deleteTask } from "../api/services/firestoreTask";
 
 const initialValues = {
   task: "",
@@ -55,7 +55,7 @@ function HomeTask() {
         )}
       </div>
 
-      {dataTask && <Task tasks={dataTask} toggleTask={toggleTask} />}
+      {dataTask && <Task tasks={dataTask} />}
 
       {dataTaskCompleted.length > 0 && (
         <section className={`${breakpointWidth > 600 ? "" : "mb-4"}`}>
@@ -64,7 +64,9 @@ function HomeTask() {
             className="p-1 align-spaceBetween-box icon"
             onClick={handleShowTaskIncompleted}
           >
-            <h4>Completadas {`(${dataTaskCompleted.length})`}</h4>
+            <h4 className="normal-text">
+              Completadas {`(${dataTaskCompleted.length})`}
+            </h4>
             {showTaskIncompleted ? (
               <span className={"material-icons icon"}>expand_more</span>
             ) : (

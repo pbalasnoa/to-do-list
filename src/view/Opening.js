@@ -16,7 +16,7 @@ const Opening = () => {
         <article className="mt-1_25">
           <h1>AppTask</h1>
           <p className="py-1 --center-text">
-            Toma el control de todo lo que tienes que hacer.
+            Toma el control de todo lo que tienes por hacer.
           </p>
           <div className="row-box mt-1_25 sm-block-box">
             <Link to="/login" className="mb-1">

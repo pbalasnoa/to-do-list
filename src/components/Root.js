@@ -1,11 +1,16 @@
 import { useContext } from "react";
 import AuthContext from "../context/AuthContext";
+import Loader from "./Loader";
 
 const Root = ({ children }) => {
   const { authReady } = useContext(AuthContext);
 
   if (!authReady) {
-    return <div>Loading...</div>;
+    return (
+      <>
+        <Loader />
+      </>
+    );
   }
 
   return children;

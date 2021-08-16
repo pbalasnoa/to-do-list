@@ -43,7 +43,9 @@
   --red-500: #d93025;
 
   --black-trans-02: rgba(0, 0, 0, 0.2);
+  --black-trans-04: rgba(0, 0, 0, 0.4);
   --blue-trans-04: rgba(219, 230, 253, 0.4);
+  --white-trans-04: rgba(255, 255, 255, 0.4);
 
   --roboto-light: "roboto-light", sans-serif;
   --roboto-regular: "roboto-regular", sans-serif;
@@ -77,7 +79,6 @@ body {
   box-sizing: inherit;
   margin: 0;
   padding: 0;
-  font-size: 1rem;
 }
 
 a {
@@ -313,6 +314,10 @@ span[class~="--cursor-default"] {
 /* -------------------------- */
 /* $SPACING */
 /* -------------------------- */
+.p-0_5 {
+  padding: 0.5rem;
+}
+
 .p-1 {
   padding: 1rem;
 }
@@ -373,6 +378,10 @@ span[class~="--cursor-default"] {
   margin-top: 2.5rem;
 }
 
+.mr-1 {
+  margin-right: 1rem;
+}
+
 .mb-0_5 {
   margin-bottom: 0.5rem;
 }
@@ -401,6 +410,13 @@ span[class~="--cursor-default"] {
 /* -------------------------- */
 /* $COMPONENTS */
 /* -------------------------- */
+
+.box-icon {
+  width: 50px;
+  height: 100%;
+  background-color: var(--blue-500);
+  color: var(--white);
+}
 
 .icon {
   font-size: 1.5rem;
@@ -462,11 +478,13 @@ span[class~="--cursor-default"] {
 }
 
 input:focus ~ input--label,
-input:not(:placeholder-shown) ~ .input--label {
+input[type="text"]:not(:placeholder-shown) ~ .input--label,
+input[type="password"]:not(:placeholder-shown) ~ .input--label {
   transform: translateY(-22px);
 }
 
-input:not(:placeholder-shown) {
+input[type="text"]:not(:placeholder-shown),
+input[type="password"]:not(:placeholder-shown) {
   margin-top: 1rem;
 }
 
@@ -537,39 +555,38 @@ input:not(:placeholder-shown) {
   display: flex;
   position: fixed;
   top: 0;
-  left: 0;
-  z-index: 2;
-  width: 100%;
+  left: 50%;
+  width: 600px;
   min-height: 100vh;
+  z-index: 2;
+  transform: translateX(-50%);
 }
 
 .dropdown {
   position: absolute;
+  top: 0;
   right: 0;
-  transform: translateX(-8%);
   min-width: 250px;
   width: max-content;
-  padding-block: 1rem;
   background-color: var(--white);
   box-shadow: 0px 3px 6px 2px rgba(68, 66, 66, 0.1);
   overflow: hidden;
   z-index: 1;
+  transform: translateX(-8%);
+  cursor: pointer;
 }
 
 .dropdown-toolsTask {
-  top: 50px;
+  top: 112px;
 }
 
 .dropdown-avatar {
-  top: 40px;
+  top: 50px;
 }
 
 .menu-item {
-  display: flex;
-  align-items: center;
-  padding: 0.5rem;
+  height: 50px;
   transition: background 0.5s ease;
-  cursor: pointer;
 }
 
 .menu-item:hover {
