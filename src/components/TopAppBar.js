@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const TopAppBar = ({ id, state, handleDelete, handlePutTask }) => {
   return (
     <div className="align-spaceBetween-box p-1">
-      {state.isCompleted ? (
+      {state ? (
         <span>
           <Link to="/" className="material-icons icon --gray_500">
             arrow_back
@@ -20,9 +20,7 @@ const TopAppBar = ({ id, state, handleDelete, handlePutTask }) => {
       <span
         className="material-icons icon --gray_500"
         onClick={() => {
-          state.isCompleted
-            ? handleDelete(id, "taskCompleted")
-            : handleDelete(id, "task");
+          handleDelete(id);
         }}
       >
         delete

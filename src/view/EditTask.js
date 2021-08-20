@@ -3,7 +3,11 @@ import { useContext } from "react";
 import TopAppBar from "../components/TopAppBar";
 import EditForm from "../components/EditForm";
 
-import { putTask, deleteTask, toggleTask } from "../api/services/firestoreTask";
+import {
+  putTask,
+  deleteTask,
+  putTaskState,
+} from "../api/services/firestoreTask";
 import { useHistory } from "react-router-dom";
 import { useForm } from "../hooks/useForm";
 
@@ -12,24 +16,21 @@ import TaskContext from "../context/TaskContext";
 
 const EditTask = (props) => {
   const history = useHistory();
-  const { data, state } = props.location;
+  const { data } = props.location;
   const { id, ...restData } = data;
   const { user } = useContext(AuthContext);
   const { dataTask } = useContext(TaskContext);
   const { values, handleInputChange } = useForm(restData);
+  console.log("desde props", data);
 
-  const handledeleteTask = async (id, collection) => {
-    deleteTask(id, collection, user.id);
+  const handledeleteTask = async (id) => {
+    deleteTask(id, user.id);
     history.push("/");
   };
 
-  const TaskIncompleted = (id, collection, values) => {
-    toggleTask(id, collection, values, user.id);
-    history.push("/");
-  };
-
-  const TaskCompleted = (id, collection, values) => {
-    toggleTask(id, collection, values, user.id);
+  const TaskState = (id, isCompleted) => {
+    console.log("aquí estoy");
+    putTaskState(id, user.id, isCompleted);
     history.push("/");
   };
 
@@ -38,11 +39,11 @@ const EditTask = (props) => {
     let formatDate;
     if (getTask[0].hasOwnProperty("date")) {
       formatDate = new Date(getTask[0].date.seconds * 1000);
-      putTask(data.id, "task", values, user.id, formatDate);
+      putTask(data.id, values, user.id, formatDate);
     } else if (values.date && getTask[0].hasOwnProperty("date") === false) {
-      putTask(data.id, "task", getTask[0], user.id);
+      putTask(data.id, getTask[0], user.id);
     } else {
-      putTask(data.id, "task", values, user.id);
+      putTask(data.id, values, user.id);
     }
   };
 
@@ -51,13 +52,13 @@ const EditTask = (props) => {
       <div>
         <TopAppBar
           id={data.id}
-          state={state}
+          state={data.isCompleted}
           handleDelete={handledeleteTask}
           handlePutTask={updateTask}
         />
         <h1
           className={`pl-1 normal-text --blue_500 ${
-            state.isCompleted && "--gray_500"
+            data.isCompleted && "--gray_500"
           }`}
         >
           My List 1
@@ -67,10 +68,9 @@ const EditTask = (props) => {
       <EditForm
         id={data.id}
         values={values}
-        state={state}
+        state={data.isCompleted}
         handleInputChange={handleInputChange}
-        TaskIncompleted={TaskIncompleted}
-        TaskCompleted={TaskCompleted}
+        TaskState={TaskState}
       />
     </div>
   );

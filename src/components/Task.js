@@ -4,7 +4,7 @@ import AuthContext from "../context/AuthContext";
 
 import { Link } from "react-router-dom";
 
-import { putTaskDate, toggleTask } from "../api/services/firestoreTask";
+import { putTaskDate, putTaskState } from "../api/services/firestoreTask";
 
 import handleDate from "../api/handleDate";
 import DatePicker, { registerLocale } from "react-datepicker";
@@ -14,13 +14,11 @@ registerLocale("es", es);
 
 const Task = (props) => {
   const { user } = useContext(AuthContext);
-  const { tasks, isCompleted, showTaskIncompleted } = props;
+  const { tasks, showTaskIncompleted } = props;
   const [datePickerValue, setDatePickerValue] = useState(new Date());
   const [taskId, setTaskId] = useState();
   const [data, setData] = useState();
-  const [activateAnimation, setActivateAnimation] = useState();
   const RefDate = useRef(null);
-  const RefTask = useRef([]);
 
   const openDatePicker = (date, task) => {
     date.stopPropagation();
@@ -30,20 +28,11 @@ const Task = (props) => {
 
   const handleChangeDate = (e) => {
     setDatePickerValue(e);
-    putTaskDate(taskId, "task", user.id, e);
+    putTaskDate(taskId, user.id, e);
   };
 
   useEffect(() => {
-    if (activateAnimation) {
-      RefTask.current[activateAnimation].classList.add("fadeInAnimation");
-    } else if (activateAnimation === 0) {
-      RefTask.current[0].classList.add("fadeInAnimation");
-    }
-  }, [activateAnimation]);
-
-  useEffect(() => {
-    if (data && data.length > 0)
-      toggleTask(data[0].id, data[1], data[0], user.id);
+    if (data) putTaskState(data.id, user.id, !data.isCompleted);
   }, [data]);
 
   return (
@@ -57,51 +46,39 @@ const Task = (props) => {
         locale="es"
         withPortal
       />
-      {tasks?.map((task, index) => (
+      {tasks?.map((task) => (
         <article
-          ref={(el) => (RefTask.current[index] = el)}
           key={task.id}
           className={`w-1 align-center-box  p-1 shadow-effect ${
             showTaskIncompleted ? "--hide" : ""
           } `}
-          onAnimationEnd={() =>
-            isCompleted
-              ? setData([task, "task"])
-              : setData([task, "taskCompleted"])
-          }
         >
-          {isCompleted ? (
-            <input
-              type="checkbox"
-              className="mr-1 radio-button-unchecked done"
-              onTransitionEnd={() => setActivateAnimation(index)}
-            />
-          ) : (
-            <input
-              type="checkbox"
-              className="mr-1 radio-button-unchecked"
-              onTransitionEnd={() => setActivateAnimation(index)}
-            />
-          )}
+          <input
+            type="checkbox"
+            className={`mr-1 radio-button-unchecked ${
+              task.isCompleted && "done"
+            }`}
+            onTransitionEnd={() => setData(task)}
+          />
+
           <div className="w-1">
             <Link
               className="align-left-column-box"
               to={{
                 pathname: `/edit/${task.id}`,
                 data: task,
-                state: { isCompleted: isCompleted },
               }}
             >
-              <p className={` ${isCompleted && "--text-decoration"} `}>
+              <p className={` ${task.isCompleted && "--text-decoration"} `}>
                 {task.task}
               </p>
               {task.details && (
-                <small className={` ${isCompleted && "--gray_200"} `}>
+                <small className={` ${task.isCompleted && "--gray_200"} `}>
                   {task.details}
                 </small>
               )}
             </Link>
-            {isCompleted ||
+            {task.isCompleted ||
               (task.date && (
                 <div className="align-left-box">
                   <button

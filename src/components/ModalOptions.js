@@ -14,7 +14,7 @@ const ModalOptions = (props) => {
   const handleClickModal = (e) => e.stopPropagation();
 
   const deleteAllTaskCompleted = (taskCompleted) => {
-    taskCompleted.map((task) => deleteTask(task.id, "taskCompleted", user.id));
+    taskCompleted.map((task) => deleteTask(task.id, user.id));
     closeModal();
   };
 

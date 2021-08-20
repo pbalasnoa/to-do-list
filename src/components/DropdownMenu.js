@@ -16,7 +16,7 @@ const DropdownMenu = (props) => {
             key={item.nameItem}
           >
             <div className="box-icon align-center-box">
-              <span class="material-icons icon">{item.icon}</span>
+              <span className="material-icons icon">{item.icon}</span>
             </div>
             <p className="text--400 --margin-left p-0_5">{item.nameItem}</p>
           </div>

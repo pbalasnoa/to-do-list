@@ -18,15 +18,15 @@ export function TaskContextProvider({ children }) {
           (task) => {
             setDataTask(task);
           },
-          "task",
-          user.id
+          user.id,
+          false
         );
         watcherTask(
           (taskCompleted) => {
             setDataTaskCompleted(taskCompleted);
           },
-          "taskCompleted",
-          user.id
+          user.id,
+          true
         );
       }
     });

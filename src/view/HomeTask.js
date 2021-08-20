@@ -32,7 +32,7 @@ function HomeTask() {
 
   const handleSaveTask = async (e, date) => {
     e.preventDefault();
-    await postTask("task", values, user.id, date);
+    await postTask(values, user.id, date);
     setValues(initialValues);
     setIsOpenModal(false);
   };
@@ -75,7 +75,6 @@ function HomeTask() {
           </div>
           <Task
             tasks={dataTaskCompleted}
-            isCompleted={true}
             showTaskIncompleted={showTaskIncompleted}
           />
         </section>

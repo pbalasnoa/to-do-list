@@ -10,7 +10,7 @@ const ToolsTask = ({ deleteTask, openModal }) => {
   const { dataTaskCompleted } = useContext(TaskContext);
 
   const deleteAllTaskCompleted = (taskCompleted) => {
-    taskCompleted.map((task) => deleteTask(task.id, "taskCompleted", user.id));
+    taskCompleted.map((task) => deleteTask(task.id, user.id));
     setOpen(false);
   };
 

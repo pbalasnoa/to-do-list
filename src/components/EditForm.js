@@ -12,14 +12,8 @@ import { putTaskDate, deleteDateTask } from "../api/services/firestoreTask";
 
 registerLocale("es", es);
 
-const EditForm = ({
-  id,
-  values,
-  state,
-  handleInputChange,
-  TaskIncompleted,
-  TaskCompleted,
-}) => {
+const EditForm = ({ id, values, state, handleInputChange, TaskState }) => {
+  console.log("edit", state);
   const { user } = useContext(AuthContext);
   const { dataTask } = useContext(TaskContext);
   const RefTitle = useRef(null);
@@ -39,13 +33,13 @@ const EditForm = ({
 
   const handleChangeDate = (e) => {
     setDatePickerValue(e);
-    putTaskDate(id, "task", user.id, e);
+    putTaskDate(id, user.id, e);
   };
 
   const clear = (e) => {
     e.stopPropagation();
     setShowDate(false);
-    deleteDateTask(id, "task", user.id);
+    deleteDateTask(id, user.id);
   };
 
   const getTask = (id) => dataTask.filter((task) => task.id === id);
@@ -56,9 +50,9 @@ const EditForm = ({
         <div className="p-1">
           <Textarea
             classes={`w-1 mb-1 font-regular h2 ${
-              state.isCompleted && "--text-decoration --gray_text"
+              state && "--text-decoration --gray_text"
             }`}
-            disabled={state.isCompleted}
+            disabled={state}
             name="task"
             value={values.task}
             message="Ingresa un título"
@@ -68,16 +62,14 @@ const EditForm = ({
           <div className="align-left-box mb-1">
             <span
               className={`material-icons icon pr-1 --cursor-default ${
-                state.isCompleted ? "--gray_300" : "--gray_500"
+                state ? "--gray_300" : "--gray_500"
               } `}
             >
               sort
             </span>
             <Textarea
-              classes={`w-1  ${
-                state.isCompleted ? "--gray_300" : "--gray_text"
-              }`}
-              disabled={state.isCompleted}
+              classes={`w-1  ${state ? "--gray_300" : "--gray_text"}`}
+              disabled={state}
               name="details"
               value={values.details}
               message="Agregar detalles"
@@ -88,11 +80,11 @@ const EditForm = ({
           <button
             className="align-left-box button--disabled"
             onClick={openDatePicker}
-            disabled={state.isCompleted}
+            disabled={state}
           >
             <span
               className={`material-icons icon pr-1 --cursor-default ${
-                state.isCompleted ? "--gray_300" : "--gray_500"
+                state ? "--gray_300" : "--gray_500"
               } `}
             >
               event_available
@@ -100,27 +92,21 @@ const EditForm = ({
             {showDate ? (
               <p
                 className={`date-text align-center-box ${
-                  state.isCompleted
-                    ? "--gray_300 date-text__disable"
-                    : "--gray_text"
+                  state ? "--gray_300 date-text__disable" : "--gray_text"
                 } small`}
               >
                 {formattedDate}
                 <span
                   className={`material-icons icon pl-0_25  ${
-                    state.isCompleted ? "--gray_300" : "--gray_500"
+                    state ? "--gray_300" : "--gray_500"
                   } `}
                   onClick={clear}
                 >
                   clear
                 </span>
               </p>
-            ) : state.isCompleted ? (
-              <p
-                className={`${
-                  state.isCompleted ? "--gray_300" : "--gray_text"
-                }`}
-              >
+            ) : state ? (
+              <p className={`${state ? "--gray_300" : "--gray_text"}`}>
                 Agregar fecha
               </p>
             ) : getTask(id)[0].hasOwnProperty("date") ? (
@@ -131,9 +117,7 @@ const EditForm = ({
               >
                 <p
                   className={`${
-                    state.isCompleted
-                      ? "--gray_300 date-text__disable"
-                      : "--gray_text"
+                    state ? "--gray_300 date-text__disable" : "--gray_text"
                   } small`}
                 >
                   {format(
@@ -146,7 +130,7 @@ const EditForm = ({
                 </p>
                 <span
                   className={`material-icons icon pl-0_25 ${
-                    state.isCompleted ? "--gray_300" : "--gray_500"
+                    state ? "--gray_300" : "--gray_500"
                   } `}
                   onClick={clear}
                 >
@@ -161,21 +145,12 @@ const EditForm = ({
         <hr />
 
         <div className="align-right-box">
-          {state.isCompleted ? (
-            <button
-              className="button button--only-letter"
-              onClick={() => TaskIncompleted(id, "task", values)}
-            >
-              Marcar como no completada
-            </button>
-          ) : (
-            <button
-              className="button button--only-letter"
-              onClick={() => TaskCompleted(id, "taskCompleted", values)}
-            >
-              Marcar como completada
-            </button>
-          )}
+          <button
+            className="button button--only-letter"
+            onClick={() => TaskState(id, !state)}
+          >
+            {state ? "Marcar como no completada" : "Marcar como completada"}
+          </button>
         </div>
       </div>
       <DatePicker
