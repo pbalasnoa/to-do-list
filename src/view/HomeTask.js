@@ -1,14 +1,19 @@
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 import Header from "../components/Header";
+import ToolsTask from "../components/ToolsTask";
 import Task from "../components/Task";
 import Modal from "../components/Modal";
+import ModalOptions from "../components/ModalOptions";
 import BottomAppBar from "../components/BottomAppBar";
 
-import { Link } from "react-router-dom";
 import useModal from "../hooks/useModal";
 import { useForm } from "../hooks/useForm";
-import usePutTask from "../hooks/usePutTask";
-import { db } from "../services/firebase";
+import useWindowDimensions from "../hooks/useWindowDimensions";
+
+import TaskContext from "../context/TaskContext";
+import AuthContext from "../context/AuthContext";
+
+import { postTask, deleteTask } from "../api/services/firestoreTask";
 
 const initialValues = {
   task: "",
@@ -16,26 +21,20 @@ const initialValues = {
 };
 
 function HomeTask() {
-  const [dataTask, setDataTask] = useState(null);
+  const { dataTask, dataTaskCompleted } = useContext(TaskContext);
+  const { user } = useContext(AuthContext);
+  const { width: breakpointWidth } = useWindowDimensions();
   const { values, setValues, handleInputChange } = useForm(initialValues);
   const [isOpenModal, setIsOpenModal, openModal, closeModal] = useModal(false);
-  const { handlePutTask } = usePutTask();
+  const [isOpenModalOptions, , openModalOptions, closeModalOptions] =
+    useModal(false);
+  const [showTaskIncompleted, setShowTaskIncompleted] = useModal(false);
 
-  const handleSaveTask = (e) => {
+  const handleSaveTask = async (e, date) => {
     e.preventDefault();
-    handlePutTask(null, "task", values);
+    await postTask(values, user.id, date);
     setValues(initialValues);
     setIsOpenModal(false);
-  };
-
-  const getTask = () => {
-    db.collection("task").onSnapshot((querySnapshot) => {
-      const docs = [];
-      querySnapshot.forEach((doc) => {
-        docs.push({ ...doc.data(), id: doc.id });
-      });
-      setDataTask(docs);
-    });
   };
 
   const handleCloseModal = () => {
@@ -43,30 +42,44 @@ function HomeTask() {
     setValues(initialValues);
   };
 
-  useEffect(() => {
-    getTask();
-  }, []);
+  const handleShowTaskIncompleted = () => {
+    setShowTaskIncompleted(!showTaskIncompleted);
+  };
 
   return (
-    <div className="container">
-      <Header />
-      {dataTask?.map((task) => (
-        <div key={task.id} className="task-container">
-          <div>
-            <span
-              className="material-icons icon --gray --pointer"
-              // onClick={() => console.log("hola querida")}
-            >
-              radio_button_unchecked
-            </span>
+    <div className={`container ${breakpointWidth > 600 && "grid"}`}>
+      <div>
+        <Header />
+        {breakpointWidth > 599 && (
+          <ToolsTask deleteTask={deleteTask} openModal={openModal} />
+        )}
+      </div>
+
+      {dataTask && <Task tasks={dataTask} />}
+
+      {dataTaskCompleted.length > 0 && (
+        <section className={`${breakpointWidth > 600 ? "" : "mb-4"}`}>
+          <hr />
+          <div
+            className="p-1 align-spaceBetween-box icon"
+            onClick={handleShowTaskIncompleted}
+          >
+            <h4 className="normal-text">
+              Completadas {`(${dataTaskCompleted.length})`}
+            </h4>
+            {showTaskIncompleted ? (
+              <span className={"material-icons icon"}>expand_more</span>
+            ) : (
+              <span className={"material-icons icon"}>expand_less</span>
+            )}
           </div>
-          <div>
-            <Link to={{ pathname: `/edit/${task.id}`, data: task }}>
-              <Task dataTask={task} />
-            </Link>
-          </div>
-        </div>
-      ))}
+          <Task
+            tasks={dataTaskCompleted}
+            showTaskIncompleted={showTaskIncompleted}
+          />
+        </section>
+      )}
+
       <Modal
         isOpenModal={isOpenModal}
         closeModal={handleCloseModal}
@@ -74,7 +87,17 @@ function HomeTask() {
         handleInputChange={handleInputChange}
         handleSaveTask={handleSaveTask}
       />
-      <BottomAppBar openModal={openModal} />
+      <ModalOptions
+        isOpenModal={isOpenModalOptions}
+        closeModal={closeModalOptions}
+        deleteTask={deleteTask}
+      />
+      {breakpointWidth < 600 && (
+        <BottomAppBar
+          openModal={openModal}
+          openModalOptions={openModalOptions}
+        />
+      )}
     </div>
   );
 }
