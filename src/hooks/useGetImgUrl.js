@@ -20,7 +20,7 @@ const useGetImgUrl = (image) => {
             );
           },
           (err) => {
-            console.log(err);
+            // console.log(err);
           },
           async () => {
             const downloadURLImg = await img.snapshot.ref.getDownloadURL();

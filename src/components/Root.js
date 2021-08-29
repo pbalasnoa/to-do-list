@@ -6,11 +6,7 @@ const Root = ({ children }) => {
   const { authReady } = useContext(AuthContext);
 
   if (!authReady) {
-    return (
-      <>
-        <Loader />
-      </>
-    );
+    return <Loader />;
   }
 
   return children;

@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState, useRef } from "react";
 import DropdownMenu from "./DropdownMenu";
-import { useHistory } from "react-router";
 import { getProfileAvatar, logOut } from "../api/services/auth";
 
 import AuthContext from "../context/AuthContext";
@@ -14,12 +13,6 @@ const Avatar = () => {
   const [imgNew, setImgNew] = useState();
   const [uploadImg, setUploadImg] = useState([]);
   const [urlImg, progress] = useGetImgUrl(uploadImg);
-  const history = useHistory();
-
-  const handleLogOut = () => {
-    history.push("/opening");
-    logOut();
-  };
 
   const handleChangeImg = (event) => {
     if (event.target.files.length > 0) {
@@ -66,14 +59,14 @@ const Avatar = () => {
           classes="dropdown-avatar"
           items={[
             {
-              nameItem: "Cerrar sesión",
-              "Cerrar sesión": handleLogOut,
-              icon: "logout",
-            },
-            {
               nameItem: "Cambiar foto",
               "Cambiar foto": () => refFileDialog.current.click(),
               icon: "camera_enhance",
+            },
+            {
+              nameItem: "Cerrar sesión",
+              "Cerrar sesión": logOut,
+              icon: "logout",
             },
           ]}
         />

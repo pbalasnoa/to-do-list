@@ -13,7 +13,6 @@ import { putTaskDate, deleteDateTask } from "../api/services/firestoreTask";
 registerLocale("es", es);
 
 const EditForm = ({ id, values, state, handleInputChange, TaskState }) => {
-  console.log("edit", state);
   const { user } = useContext(AuthContext);
   const { dataTask } = useContext(TaskContext);
   const RefTitle = useRef(null);

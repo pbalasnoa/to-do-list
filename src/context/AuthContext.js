@@ -14,12 +14,10 @@ export function AuthProvider({ children }) {
         setAuthReady(true);
         setUser(user);
         setIsLoggedIn(true);
-        console.log("usuario conectado");
       } else {
         setAuthReady(true);
         setUser(null);
         setIsLoggedIn(false);
-        console.log("no hay usuario conectado");
       }
     });
   }, []);

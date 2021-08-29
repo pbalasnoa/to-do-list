@@ -8,10 +8,10 @@
 
 .animated-sub-text {
   position: absolute;
-  top: 40%;
+  /* top: 40%; */
   left: 50%;
   font-size: 2vw;
-  transform: translateX(-50%);
+  transform: translate(-50%, -200%);
   /* color: var(--white); */
   color: var(--blue-500);
 }

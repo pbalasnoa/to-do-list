@@ -21,7 +21,6 @@ const EditTask = (props) => {
   const { user } = useContext(AuthContext);
   const { dataTask } = useContext(TaskContext);
   const { values, handleInputChange } = useForm(restData);
-  console.log("desde props", data);
 
   const handledeleteTask = async (id) => {
     deleteTask(id, user.id);
@@ -29,7 +28,6 @@ const EditTask = (props) => {
   };
 
   const TaskState = (id, isCompleted) => {
-    console.log("aquí estoy");
     putTaskState(id, user.id, isCompleted);
     history.push("/");
   };

@@ -1,35 +1,53 @@
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import Input from "../components/Input";
+import Loader from "../components/Loader";
 
 import { useForm } from "../hooks/useForm";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 
 import { createUser } from "../api/services/auth";
+import { useState } from "react";
 
 const initialValues = {
-  nickName: "",
   email: "",
   password: "",
   confirmPassword: "",
 };
 
 const SignUp = () => {
-  const history = useHistory();
   const { width: breakpointWidth } = useWindowDimensions();
   const { values, setValues, handleInputChange } = useForm(initialValues);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSignUp = (e) => {
     e.preventDefault();
-    if (values.password !== values.confirmPassword)
-      return console.log("Las contraseñas no coinciden");
-    createUser(values.email, values.password);
-    setValues(initialValues);
-    history.push("/");
+    if (values.password !== values.confirmPassword) {
+      setErrorMessage("Las contraseñas no coinciden");
+    } else if (
+      values.email === "" ||
+      values.password === "" ||
+      values.password === ""
+    ) {
+      setErrorMessage("Debe llenar todos los campos");
+    } else {
+      createUser(values.email, values.password, (res) => {
+        if (res.success === "ok") setIsLoading(true);
+
+        if (res.errorCode === "auth/invalid-email")
+          setErrorMessage("El correo ingresado no es válido");
+
+        if (res.errorCode === "auth/weak-password")
+          setErrorMessage("La contraseña debe tener al menos 6 caracteres");
+      });
+    }
+    setValues({ ...values, password: "", confirmPassword: "" });
   };
 
   return (
     <div className="container">
+      {isLoading && <Loader />}
       <div className="item sm-align-center-box">
         {breakpointWidth < 600 && (
           <span className="align-left-column-box">
@@ -43,17 +61,8 @@ const SignUp = () => {
             <h1 className="my-1">Hola!</h1>
             <p>Crea una nueva cuenta</p>
           </div>
+          {errorMessage && <p className="mt-1 --red_500">{errorMessage}</p>}
           <form onSubmit={handleSignUp} className="align-left-column-box">
-            {/* <div className="w-1 mt-1_25">
-              <Input
-                type="text"
-                classes="input--border-bottom"
-                name="nickName"
-                value={values.nickName}
-                message="Nombre de usuario"
-                handleChange={handleInputChange}
-              />
-            </div> */}
             <div className="w-1 mt-1_25">
               <Input
                 type="text"

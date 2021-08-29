@@ -1,10 +1,12 @@
 import { auth } from "./firebase";
 import { db } from "./firebase";
 
-export const createUser = (email, password) => {
+export const createUser = (email, password, callback) => {
   auth
     .createUserWithEmailAndPassword(email, password)
     .then((cred) => {
+      const success = "ok";
+      callback({ success });
       return {
         data: db
           .collection("users")
@@ -15,22 +17,28 @@ export const createUser = (email, password) => {
           .catch((err) => {
             console.error(err.menssage);
           }),
-        status: "ok",
       };
     })
     .catch((error) => {
-      console.error(error.menssage);
+      const errorCode = error.code;
+      callback({ errorCode });
     });
 };
 
-export const login = (email, password) => {
+export const login = (email, password, callback) => {
   auth
     .signInWithEmailAndPassword(email, password)
-    .then((cred) => {
-      // console.log(cred.user);
+    .then(() => {
+      const success = "ok";
+      callback({
+        success,
+      });
     })
     .catch((error) => {
-      console.log(error.message);
+      const errorCode = error.code;
+      callback({
+        errorCode,
+      });
     });
 };
 
@@ -54,7 +62,6 @@ export const watcherUser = (callback) => {
           });
         });
     } else {
-      console.log("No hay usuario logueado");
       callback(null);
     }
   });

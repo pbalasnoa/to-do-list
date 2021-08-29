@@ -13,7 +13,6 @@ export const watcherTask = (callback, userId, isCompleted) => {
       snapshot.forEach((doc) => {
         docs.push({ ...doc.data(), id: doc.id });
       });
-      // console.log("desde watcher", docs);
       callback(docs);
     });
   return unsub;
@@ -73,10 +72,6 @@ export const putTask = async (id, values, userId, date = null) => {
 export const deleteTask = async (id, userId) => {
   await refUser.doc(userId).collection("task").doc(id).delete();
   return true;
-};
-
-export const toggleTask = (id, userId, isCompleted) => {
-  putTaskState(id, userId, isCompleted);
 };
 
 export const deleteDateTask = async (id, userId) => {
