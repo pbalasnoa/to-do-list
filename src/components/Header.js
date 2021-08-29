@@ -1,8 +1,8 @@
-import "../styles/components/Header.css";
 import Avatar from "./Avatar";
+
 const Header = () => (
-  <div className="header">
-    <h1 className="header__title">My List</h1>
+  <div className="item block-box header">
+    <h1 className="pl-1">My List</h1>
     <Avatar />
   </div>
 );

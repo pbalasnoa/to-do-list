@@ -1,34 +1,75 @@
+import { useContext } from "react";
+
 import TopAppBar from "../components/TopAppBar";
 import EditForm from "../components/EditForm";
 
-import { db } from "../services/firebase";
+import {
+  putTask,
+  deleteTask,
+  putTaskState,
+} from "../api/services/firestoreTask";
 import { useHistory } from "react-router-dom";
 import { useForm } from "../hooks/useForm";
-import usePutTask from "../hooks/usePutTask";
+
+import AuthContext from "../context/AuthContext";
+import TaskContext from "../context/TaskContext";
 
 const EditTask = (props) => {
   const history = useHistory();
   const { data } = props.location;
-  const { values, handleInputChange } = useForm(data);
-  const { handlePutTask } = usePutTask();
+  const { id, ...restData } = data;
+  const { user } = useContext(AuthContext);
+  const { dataTask } = useContext(TaskContext);
+  const { values, handleInputChange } = useForm(restData);
 
-  const deleteTask = async (id) => {
-    await db.collection("task").doc(id).delete();
+  const handledeleteTask = async (id) => {
+    deleteTask(id, user.id);
     history.push("/");
   };
 
-  const putTask = () => {
-    handlePutTask(data.id, "task", values);
+  const TaskState = (id, isCompleted) => {
+    putTaskState(id, user.id, isCompleted);
+    history.push("/");
+  };
+
+  const updateTask = (id) => {
+    const getTask = dataTask.filter((task) => task.id === id);
+    let formatDate;
+    if (getTask[0].hasOwnProperty("date")) {
+      formatDate = new Date(getTask[0].date.seconds * 1000);
+      putTask(data.id, values, user.id, formatDate);
+    } else if (values.date && getTask[0].hasOwnProperty("date") === false) {
+      putTask(data.id, getTask[0], user.id);
+    } else {
+      putTask(data.id, values, user.id);
+    }
   };
 
   return (
-    <div className="container">
-      <TopAppBar
+    <div className="container grid">
+      <div>
+        <TopAppBar
+          id={data.id}
+          state={data.isCompleted}
+          handleDelete={handledeleteTask}
+          handlePutTask={updateTask}
+        />
+        <h1
+          className={`pl-1 normal-text --blue_500 ${
+            data.isCompleted && "--gray_500"
+          }`}
+        >
+          My List 1
+        </h1>
+      </div>
+
+      <EditForm
         id={data.id}
-        handleDelete={deleteTask}
-        handlePutTask={putTask}
+        values={values}
+        state={data.isCompleted}
+        handleInputChange={handleInputChange}
+        TaskState={TaskState}
       />
-      <EditForm values={values} handleInputChange={handleInputChange} />
     </div>
   );
 };
