@@ -1,70 +1,69 @@
-# Getting Started with Create React App
+# AppTask
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Web responsiva que funciona como un _To Do_, organizador de tareas. El diseño es inspirado en la app tasks de google.
 
-## Available Scripts
+### :fire: Motivación
 
-In the project directory, you can run:
+La motivación para realizar este proyecto fue practicar el modelo CRUD y el uso de firebase (autenticación, Cloud Firestore, Cloud Storage)
 
-### `npm start`
+[DEMO AppTask](https://apptask-323am3t9q-abalasnoa.vercel.app/opening "Web AppTask")
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+![Vista previa de AppTask](./imgReadme/preview.png "Vista previa de AppTask")
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Tecnologías
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+El proyecto es creado con:
 
-### `npm run build`
+- Node: 14.15.4
+- React: 17.0.1
+- Firebase: 8.2.1
+- Date-fns: 2.23.0
+- Vercel: 23.1.2
+- HTML, CSS y JavaScript
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Estado del proyecto
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+El proyecto se encuentra en una versión inicial de lo que se espera como producto final. A continuación se en lista las funcionalidades que posee:
 
-### `npm run eject`
+- [x] Registro e inicio de sesión con correo y contraseña.
+- [ ] Registro e inicio de sesión por medio de google.
+- [x] Subir y actualizar imagen de perfil.
+- [x] crear, leer, actualizar y eliminar tareas.
+- [ ] Crear varias listas de tarea.
+- [ ] Ordenar por fecha o por orden propio.
+- [ ] Agregar subtareas a las tareas.
+- [ ] Agregar la vista 404.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Bugs
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- La imagen de perfil no se actualiza de forma correcta. para que el cambio de imagen persista se debe refrescar la página.
+- Algunos detalles de css que se pueden mejorar.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Instalación
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+---
 
-## Learn More
+Sigue estos pasos correr localmente el proyecto
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+1. Clona este repositorio usando `git clone` o descargando el ZIP
+2. Ve a la carpeta del proyecto `cd to-do-list`
+3. Instala las dependencias con `npm install`
+4. Configura tus variables de entorno en un archivo **.env** para conectar con firebase
+5. Corre en ambiente local ejecutando `npm start`
+6. Disfruta de AppTask :blush:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Estructura de la base de datos
 
-### Code Splitting
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+La base de datos maneja una colección users que contiene una subcolección task.
 
-### Analyzing the Bundle Size
+![Estructura de la base de datos](./imgReadme/db.png "Vista previa de AppTask")
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### :otter: Mensaje de la desarrolladora
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Si llegaste hasta aqui por favor trae más :coffee: y :cookie:, gracias :ok_hand:

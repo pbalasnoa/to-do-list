@@ -37,6 +37,12 @@ const Modal = (props) => {
     setDate(null);
   };
 
+  const handleSave = (e, date) => {
+    e.preventDefault();
+    handleSaveTask(date);
+    handleCloseModal();
+  };
+
   const handleChangeDate = (e) => {
     setDatePickerValue(e);
     setDate(e);
@@ -128,7 +134,7 @@ const Modal = (props) => {
             <button
               className=" button button--only-letter"
               // disabled={!values.task.length}
-              onClick={(e) => handleSaveTask(e, date)}
+              onClick={(e) => handleSave(e, date)}
             >
               Guardar
             </button>

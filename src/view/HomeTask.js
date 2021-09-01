@@ -25,16 +25,15 @@ function HomeTask() {
   const { user } = useContext(AuthContext);
   const { width: breakpointWidth } = useWindowDimensions();
   const { values, setValues, handleInputChange } = useForm(initialValues);
-  const [isOpenModal, setIsOpenModal, openModal, closeModal] = useModal(false);
+  const [isOpenModal, , openModal, closeModal] = useModal(false);
   const [isOpenModalOptions, , openModalOptions, closeModalOptions] =
     useModal(false);
   const [showTaskIncompleted, setShowTaskIncompleted] = useModal(false);
 
-  const handleSaveTask = async (e, date) => {
-    e.preventDefault();
+  const handleSaveTask = async (date) => {
     await postTask(values, user.id, date);
     setValues(initialValues);
-    setIsOpenModal(false);
+    // setIsOpenModal(false);
   };
 
   const handleCloseModal = () => {

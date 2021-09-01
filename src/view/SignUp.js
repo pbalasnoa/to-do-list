@@ -38,6 +38,9 @@ const SignUp = () => {
         if (res.errorCode === "auth/invalid-email")
           setErrorMessage("El correo ingresado no es válido");
 
+        if (res.errorCode === "auth/email-already-in-use")
+          setErrorMessage("El correo ingresado ya lo tiene otro usuario");
+
         if (res.errorCode === "auth/weak-password")
           setErrorMessage("La contraseña debe tener al menos 6 caracteres");
       });

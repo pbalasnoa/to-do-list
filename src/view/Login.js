@@ -31,6 +31,9 @@ const Login = () => {
         if (res.errorCode === "auth/invalid-email")
           setErrorMessage("El correo ingresado no es válido");
 
+        if (res.errorCode === "auth/user-not-found")
+          setErrorMessage("El correo no se encuentra registrado");
+
         if (res.errorCode === "auth/wrong-password")
           setErrorMessage("La contraseña es incorrecta");
       });
