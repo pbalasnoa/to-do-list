@@ -6,13 +6,11 @@ Web responsiva que funciona como un _To Do_, organizador de tareas. El diseño e
 
 La motivación para realizar este proyecto fue practicar el modelo CRUD y el uso de firebase (autenticación, Cloud Firestore, Cloud Storage)
 
-[DEMO AppTask](https://apptask-323am3t9q-abalasnoa.vercel.app/opening "Web AppTask")
+[DEMO AppTask](https://apptask-abalasnoa.vercel.app/opening "Web AppTask")
 
-![Vista previa de AppTask](./imgReadme/preview.png "Vista previa de AppTask")
+![Vista previa de AppTask](https://firebasestorage.googleapis.com/v0/b/to-do-list-84dd6.appspot.com/o/readme%2Fpreview.png?alt=media&token=2839eb36-1da0-47dc-84ab-65a1b8c7c6ed "Vista previa de AppTask")
 
 ## Tecnologías
-
----
 
 El proyecto es creado con:
 
@@ -24,8 +22,6 @@ El proyecto es creado con:
 - HTML, CSS y JavaScript
 
 ## Estado del proyecto
-
----
 
 El proyecto se encuentra en una versión inicial de lo que se espera como producto final. A continuación se en lista las funcionalidades que posee:
 
@@ -45,8 +41,6 @@ El proyecto se encuentra en una versión inicial de lo que se espera como produc
 
 ## Instalación
 
----
-
 Sigue estos pasos correr localmente el proyecto
 
 1. Clona este repositorio usando `git clone` o descargando el ZIP
@@ -58,12 +52,10 @@ Sigue estos pasos correr localmente el proyecto
 
 ## Estructura de la base de datos
 
----
-
 La base de datos maneja una colección users que contiene una subcolección task.
 
-![Estructura de la base de datos](./imgReadme/db.png "Vista previa de AppTask")
+![Estructura de la base de datos](https://firebasestorage.googleapis.com/v0/b/to-do-list-84dd6.appspot.com/o/readme%2Fdb.png?alt=media&token=63d47ee3-9ca0-40b3-8343-da35c10d8d3c "vista de la estructura de la base de datos")
 
-### :otter: Mensaje de la desarrolladora
+### Mensaje de la desarrolladora
 
-Si llegaste hasta aqui por favor trae más :coffee: y :cookie:, gracias :ok_hand:
+Si llegaste hasta aqui por favor trae más :coffee: y :cookie:
