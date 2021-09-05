@@ -1,10 +1,10 @@
-# AppTask
+# AppTask [![Status: pause](https://img.shields.io/badge/Status-pause-yellow)](https://github.com/pbalasnoa/to-do-list/tree/deployment) [![License: MIT](https://img.shields.io/badge/License-MIT-lightgrey.svg)](https://opensource.org/licenses/MIT)
 
-Web responsiva que funciona como un _To Do_, organizador de tareas. El diseño es inspirado en la app tasks de google.
+Web responsiva que funciona como un _To Do_, organizador de tareas. El diseño es inspirado en la app tasks de Google.
 
 ### :fire: Motivación
 
-La motivación para realizar este proyecto fue practicar el modelo CRUD y el uso de firebase (autenticación, Cloud Firestore, Cloud Storage)
+La motivación para realizar este proyecto fue practicar el modelo CRUD y el uso de Firebase (autenticación, Cloud Firestore, Cloud Storage).
 
 [DEMO AppTask](https://apptask-abalasnoa.vercel.app/opening "Web AppTask")
 
@@ -26,7 +26,7 @@ El proyecto es creado con:
 El proyecto se encuentra en una versión inicial de lo que se espera como producto final. A continuación se en lista las funcionalidades que posee:
 
 - [x] Registro e inicio de sesión con correo y contraseña.
-- [ ] Registro e inicio de sesión por medio de google.
+- [ ] Registro e inicio de sesión por medio de Google.
 - [x] Subir y actualizar imagen de perfil.
 - [x] crear, leer, actualizar y eliminar tareas.
 - [ ] Crear varias listas de tarea.
@@ -36,19 +36,18 @@ El proyecto se encuentra en una versión inicial de lo que se espera como produc
 
 ### Bugs
 
-- La imagen de perfil no se actualiza de forma correcta. para que el cambio de imagen persista se debe refrescar la página.
-- Algunos detalles de css que se pueden mejorar.
+- Al actualizar la foto de perfil se debe refrescar la página para que el cambio de foto se refleje correctamente.
 
 ## Instalación
 
-Sigue estos pasos correr localmente el proyecto
+Sigue estos pasos parar correr localmente el proyecto
 
-1. Clona este repositorio usando `git clone` o descargando el ZIP
-2. Ve a la carpeta del proyecto `cd to-do-list`
-3. Instala las dependencias con `npm install`
-4. Configura tus variables de entorno en un archivo **.env** para conectar con firebase
-5. Corre en ambiente local ejecutando `npm start`
-6. Disfruta de AppTask :blush:
+1. Clona este repositorio usando `git clone` o descargando el ZIP.
+2. Ve a la carpeta del proyecto `cd to-do-list`.
+3. Instala las dependencias con `npm install`.
+4. Configura tus variables de entorno en un archivo **.env** para conectar con firebase.
+5. Corre en ambiente local ejecutando `npm start`.
+6. Disfruta de AppTask :blush:.
 
 ## Estructura de la base de datos
 
@@ -58,4 +57,6 @@ La base de datos maneja una colección users que contiene una subcolección task
 
 ### Mensaje de la desarrolladora
 
-Si llegaste hasta aqui por favor trae más :coffee: y :cookie:
+Si llegaste hasta aquí por favor trae más :coffee: y :cookie:.
+
+Sígueme en ![A_Balasnoa](https://img.shields.io/twitter/url?url=https%3A%2F%2Ftwitter.com%2FA_Balasnoa)
