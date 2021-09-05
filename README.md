@@ -59,4 +59,4 @@ La base de datos maneja una colección users que contiene una subcolección task
 
 Si llegaste hasta aquí por favor trae más :coffee: y :cookie:.
 
-Sígueme en ![A_Balasnoa](https://img.shields.io/twitter/url?url=https%3A%2F%2Ftwitter.com%2FA_Balasnoa)
+Sígueme en [![A_Balasnoa](https://img.shields.io/twitter/url?url=https%3A%2F%2Ftwitter.com%2FA_Balasnoa)](https://twitter.com/A_Balasnoa)
