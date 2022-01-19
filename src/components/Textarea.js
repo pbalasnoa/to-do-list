@@ -15,7 +15,7 @@ const Textarea = (props) => {
         MIN_TEXTAREA_HEIGHT
       )}px`;
     }
-  }, [value]);
+  }, [value]); //eslint-disable-line
 
   return (
     <textarea

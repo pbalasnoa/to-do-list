@@ -1,4 +1,4 @@
-import "../styles/Loader.css";
+import "../styles/loader.css";
 import ReactDOM from "react-dom";
 
 const Loader = () => {

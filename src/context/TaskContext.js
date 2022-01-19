@@ -30,7 +30,7 @@ export function TaskContextProvider({ children }) {
         );
       }
     });
-  }, []);
+  }, []); //eslint-disable-line
 
   return (
     <Context.Provider

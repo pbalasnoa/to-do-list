@@ -72,7 +72,7 @@ export const logOut = () => {
 export const watcherUser = (callback) => {
   auth.onAuthStateChanged((user) => {
     if (user && !user.isAnonymous) {
-      if (user.providerData[0].providerId) {
+      if (user.providerData[0].providerId === "google.com") {
         callback({
           id: user.uid,
           email: user.email,
@@ -99,8 +99,15 @@ export const watcherUser = (callback) => {
   });
 };
 
-export const getProfileAvatar = (userId, image) => {
-  db.collection("users").doc(userId).update({
-    avatar: image,
-  });
+export const updateProfileAvatar = (userId, image, callback) => {
+  db.collection("users")
+    .doc(userId)
+    .update({
+      avatar: image,
+    })
+    .then(() => {
+      callback({
+        success: "ok",
+      });
+    });
 };
