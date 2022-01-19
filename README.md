@@ -26,7 +26,7 @@ El proyecto es creado con:
 El proyecto se encuentra en una versión inicial de lo que se espera como producto final. A continuación se en lista las funcionalidades que posee:
 
 - [x] Registro e inicio de sesión con correo y contraseña.
-- [ ] Registro e inicio de sesión por medio de Google.
+- [x] Registro e inicio de sesión por medio de Google.
 - [x] Subir y actualizar imagen de perfil.
 - [x] crear, leer, actualizar y eliminar tareas.
 - [ ] Crear varias listas de tarea.
