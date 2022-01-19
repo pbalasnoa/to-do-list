@@ -6,7 +6,7 @@ import Loader from "../components/Loader";
 import { useForm } from "../hooks/useForm";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 
-import { login } from "../api/services/auth";
+import { login, loginGoogle } from "../api/services/auth";
 import { useState } from "react";
 
 const initialValues = {
@@ -39,6 +39,13 @@ const Login = () => {
       });
     }
     setValues({ ...values, password: "" });
+  };
+
+  const handleGoogleLogin = (e) => {
+    e.preventDefault();
+    loginGoogle(({ success }) => {
+      // console.log("desde login", success);
+    });
   };
 
   return (
@@ -82,6 +89,13 @@ const Login = () => {
 
             <button className="button button--contained mt-2" type="submit">
               Inciar sesión
+            </button>
+
+            <button
+              className="button button--regular mt-2"
+              onClick={handleGoogleLogin}
+            >
+              Inciar sesión con Google
             </button>
 
             <p className="w-1 mt-2 --center-text">
