@@ -614,6 +614,11 @@ input[type="password"]:not(:placeholder-shown) {
 /* -------------------------- */
 
 @media screen and (min-width: 37.5em) {
+  .avatar__img {
+    width: 42px;
+    height: 42px;
+  }
+
   .sm-block-box {
     display: flex;
     flex-direction: row;

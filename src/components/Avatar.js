@@ -1,13 +1,14 @@
 import { useContext, useEffect, useState, useRef } from "react";
 import DropdownMenu from "./DropdownMenu";
-import { getProfileAvatar, logOut } from "../api/services/auth";
+import MinLoader from "./MinLoader";
 
+import { updateProfileAvatar, logOut } from "../api/services/auth";
 import AuthContext from "../context/AuthContext";
 
 import useGetImgUrl from "../hooks/useGetImgUrl";
 
 const Avatar = () => {
-  const { user = null } = useContext(AuthContext);
+  const { user = null, setUser } = useContext(AuthContext);
   const refFileDialog = useRef(null);
   const [open, setOpen] = useState(false);
   const [imgNew, setImgNew] = useState();
@@ -24,15 +25,18 @@ const Avatar = () => {
 
   useEffect(() => {
     if (progress === 100 && urlImg.length > 0) {
-      getProfileAvatar(user.id, urlImg);
+      updateProfileAvatar(user.id, urlImg, ({ success }) => {
+        if (success === "ok")
+          setUser((prevUser) => ({ ...prevUser, avatar: urlImg }));
+      });
     }
-  }, [progress, urlImg, user]);
+  }, [progress, urlImg, user?.id, setUser]);
 
   return (
     <div className="relative">
       <div onClick={() => setOpen(!open)}>
-        {imgNew ? (
-          <img className="avatar__img" src={imgNew} alt="profile" />
+        {imgNew && progress < 100 ? (
+          <MinLoader />
         ) : user && user.avatar ? (
           <img className="avatar__img" src={user.avatar} alt="profile" />
         ) : (

@@ -33,7 +33,7 @@ const Task = (props) => {
 
   useEffect(() => {
     if (data) putTaskState(data.id, user.id, !data.isCompleted);
-  }, [data]);
+  }, [data]); // eslint-disable-line
 
   return (
     <div className="align-left-column-box">
