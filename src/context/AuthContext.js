@@ -22,6 +22,8 @@ export function AuthProvider({ children }) {
     });
   }, []);
 
+  console.log("context", user);
+
   return (
     <AuthContext.Provider
       value={{

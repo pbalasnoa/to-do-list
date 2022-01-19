@@ -1,5 +1,4 @@
-import { auth } from "./firebase";
-import { db } from "./firebase";
+import { auth, db, googleAuth } from "./firebase";
 
 export const createUser = (email, password, callback) => {
   auth
@@ -22,6 +21,30 @@ export const createUser = (email, password, callback) => {
     .catch((error) => {
       const errorCode = error.code;
       callback({ errorCode });
+    });
+};
+
+export const loginGoogle = (callback) => {
+  auth
+    .signInWithPopup(googleAuth)
+    .then((res) => {
+      const { additionalUserInfo, user } = res;
+
+      if (additionalUserInfo.isNewUser)
+        db.collection("users").doc(user.uid).set({
+          avatar: user.photoURL,
+        });
+
+      const success = "ok";
+      callback({
+        success,
+      });
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      callback({
+        errorCode,
+      });
     });
 };
 
@@ -49,6 +72,15 @@ export const logOut = () => {
 export const watcherUser = (callback) => {
   auth.onAuthStateChanged((user) => {
     if (user && !user.isAnonymous) {
+      if (user.providerData[0].providerId) {
+        callback({
+          id: user.uid,
+          email: user.email,
+          avatar: user.photoURL,
+        });
+        return;
+      }
+
       db.collection("users")
         .doc(user.uid)
         .get()

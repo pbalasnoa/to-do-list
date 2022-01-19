@@ -7,7 +7,7 @@ import AuthContext from "../context/AuthContext";
 import useGetImgUrl from "../hooks/useGetImgUrl";
 
 const Avatar = () => {
-  const { user } = useContext(AuthContext);
+  const { user = null } = useContext(AuthContext);
   const refFileDialog = useRef(null);
   const [open, setOpen] = useState(false);
   const [imgNew, setImgNew] = useState();
@@ -26,7 +26,7 @@ const Avatar = () => {
     if (progress === 100 && urlImg.length > 0) {
       getProfileAvatar(user.id, urlImg);
     }
-  }, [progress, urlImg]);
+  }, [progress, urlImg, user]);
 
   return (
     <div className="relative">
