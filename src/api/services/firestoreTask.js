@@ -2,12 +2,13 @@ import { fbFirestore, db } from "../services/firebase";
 
 const refUser = db.collection("users");
 
-export const watcherTask = (callback, userId, isCompleted) => {
+export const watcherTask = (callback, userId, isCompleted, orderBy) => {
+  const isDesc = orderBy === "createdAt" ? "desc" : "asc";
   const unsub = refUser
     .doc(userId)
     .collection("task")
     .where("isCompleted", "==", isCompleted)
-    .orderBy("createdAt", "desc")
+    .orderBy(orderBy, isDesc)
     .onSnapshot((snapshot) => {
       const docs = [];
       snapshot.forEach((doc) => {

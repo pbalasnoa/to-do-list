@@ -7,7 +7,8 @@ import TaskContext from "../context/TaskContext";
 const ToolsTask = ({ deleteTask, openModal }) => {
   const [open, setOpen] = useState(false);
   const { user } = useContext(AuthContext);
-  const { dataTaskCompleted } = useContext(TaskContext);
+  const { dataTaskCompleted, orderByTask, setOrderByTask } =
+    useContext(TaskContext);
 
   const deleteAllTaskCompleted = (taskCompleted) => {
     taskCompleted.map((task) => deleteTask(task.id, user.id));
@@ -35,6 +36,17 @@ const ToolsTask = ({ deleteTask, openModal }) => {
           setOpen={setOpen}
           classes="dropdown-toolsTask"
           items={[
+            {
+              nameItem:
+                orderByTask.orderBy === "createdAt"
+                  ? "Ordenar por fecha"
+                  : "Ordenar por mi orden",
+              "Ordenar por fecha": () =>
+                setOrderByTask({ isOrder: true, orderBy: "date" }),
+              "Ordenar por mi orden": () =>
+                setOrderByTask({ isOrder: true, orderBy: "createdAt" }),
+              icon: "delete",
+            },
             {
               nameItem: "Eliminar todas las tareas completadas",
               "Eliminar todas las tareas completadas": () =>

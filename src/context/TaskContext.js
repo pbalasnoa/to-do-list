@@ -9,32 +9,45 @@ export function TaskContextProvider({ children }) {
   const [dataTask, setDataTask] = useState(null);
   const [dataTaskCompleted, setDataTaskCompleted] = useState([]);
   const [isSetUp, setIsSetUp] = useState(false);
+  const [orderByTask, setOrderByTask] = useState({
+    isOrder: false,
+    orderBy: "createdAt",
+  });
 
   useEffect(() => {
     watcherUser((user) => {
-      if (user && !isSetUp) {
+      if ((user && !isSetUp) || (user && orderByTask.isOrder)) {
         setIsSetUp(true);
         watcherTask(
           (task) => {
             setDataTask(task);
           },
           user.id,
-          false
+          false,
+          orderByTask.orderBy
         );
         watcherTask(
           (taskCompleted) => {
             setDataTaskCompleted(taskCompleted);
           },
           user.id,
-          true
+          true,
+          orderByTask.orderBy
         );
       }
     });
-  }, []); //eslint-disable-line
+  }, [isSetUp, orderByTask]);
 
   return (
     <Context.Provider
-      value={{ dataTask, setDataTask, dataTaskCompleted, setDataTaskCompleted }}
+      value={{
+        dataTask,
+        setDataTask,
+        dataTaskCompleted,
+        setDataTaskCompleted,
+        orderByTask,
+        setOrderByTask,
+      }}
     >
       {children}
     </Context.Provider>

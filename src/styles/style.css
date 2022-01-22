@@ -209,6 +209,10 @@ span[class~="--cursor-default"] {
   color: var(--red-500);
 }
 
+.--white {
+  color: var(--white);
+}
+
 /* -------------------------- */
 /* $Font style */
 /* -------------------------- */
@@ -338,6 +342,10 @@ span[class~="--cursor-default"] {
   padding-inline: 1rem;
 }
 
+.pt-1 {
+  padding-top: 1rem;
+}
+
 .pr-1 {
   padding-right: 1rem;
 }
@@ -451,6 +459,10 @@ span[class~="--cursor-default"] {
 .button--disabled {
   color: var(--gray-300);
   background-color: white;
+}
+
+.button--link {
+  height: 44px;
 }
 
 .input--border-bottom {
