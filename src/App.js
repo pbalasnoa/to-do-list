@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import { TaskContextProvider } from "./context/TaskContext";
 import { AuthProvider } from "./context/AuthContext";
@@ -8,6 +8,7 @@ import EditTask from "./view/EditTask";
 import Opening from "./view/Opening";
 import Login from "./view/Login";
 import SignUp from "./view/SignUp";
+import NotFound from "./view/NotFound";
 
 import Loader from "./components/Loader";
 
@@ -42,6 +43,7 @@ function App() {
                 path="/edit/:id"
                 component={EditTask}
               />
+              <Route path="*" component={NotFound} />
             </Switch>
           </Root>
         </TaskContextProvider>

@@ -48,8 +48,8 @@ export const loginGoogle = (callback) => {
     });
 };
 
-export const login = (email, password, callback) => {
-  auth
+export const login = async (email, password, callback) => {
+  await auth
     .signInWithEmailAndPassword(email, password)
     .then(() => {
       const success = "ok";

@@ -9,43 +9,65 @@ import useWindowDimensions from "../hooks/useWindowDimensions";
 import { login, loginGoogle } from "../api/services/auth";
 import { useState } from "react";
 
-const initialValues = {
+const INITIALVALUES = {
   email: "",
   password: "",
 };
 
+const ERROR_MESSAGES = {
+  "auth/invalid-email": {
+    isError: true,
+    message: "El correo ingresado no es válido",
+  },
+  "auth/wrong-password": {
+    isError: true,
+    message: "La contraseña es incorrecta",
+  },
+  "auth/user-not-found": {
+    isError: true,
+    message: "Verifique el correo ingresado",
+  },
+};
+
 const Login = () => {
   const { width: breakpointWidth } = useWindowDimensions();
-  const { values, setValues, handleInputChange } = useForm(initialValues);
+  const { values, setValues, handleInputChange } = useForm(INITIALVALUES);
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [error, setError] = useState({
+    isError: false,
+    message: "",
+  });
+
+  const errorReset = () => {
+    setTimeout(() => {
+      setError({ isError: false, message: "" });
+    }, 3000);
+  };
 
   const handleLogin = (e) => {
     e.preventDefault();
+
     if (values.email === "" || values.password === "") {
-      setErrorMessage("Debe llenar todos los campos");
-    } else {
-      login(values.email, values.password, (res) => {
-        if (res.success === "ok") setIsLoading(true);
-
-        if (res.errorCode === "auth/invalid-email")
-          setErrorMessage("El correo ingresado no es válido");
-
-        if (res.errorCode === "auth/user-not-found")
-          setErrorMessage("El correo no se encuentra registrado");
-
-        if (res.errorCode === "auth/wrong-password")
-          setErrorMessage("La contraseña es incorrecta");
-      });
+      setError({ isError: true, message: "Debe llenar todos los campos" });
+      return;
     }
+
+    login(values.email, values.password, ({ success, errorCode }) => {
+      if (success === "ok") setIsLoading(true);
+
+      if (errorCode) {
+        errorReset();
+        const errorMessage = ERROR_MESSAGES[errorCode];
+        setError(errorMessage);
+      }
+    });
+
     setValues({ ...values, password: "" });
   };
 
   const handleGoogleLogin = (e) => {
     e.preventDefault();
-    loginGoogle(({ success }) => {
-      // console.log("desde login", success);
-    });
+    loginGoogle();
   };
 
   return (
@@ -63,7 +85,7 @@ const Login = () => {
           <div className="align-left-column-box">
             <h1 className="my-1">Bienvenido!</h1>
             <p>Inicia sesión para continuar</p>
-            {errorMessage && <p className="mt-1 --red_500">{errorMessage}</p>}
+            {error.isError && <p className="mt-1 --red_500">{error.message}</p>}
           </div>
           <form onSubmit={handleLogin} className="align-left-column-box">
             <div className="w-1  mt-1_25">
