@@ -4,7 +4,7 @@ Web responsiva que funciona como un _To Do_, organizador de tareas. El diseño e
 
 ### :fire: Motivación
 
-La motivación para realizar este proyecto fue practicar el modelo CRUD y el uso de Firebase (autenticación, Cloud Firestore, Cloud Storage).
+Este proyecto se hace con el fin de practicar el modelo CRUD y el uso de Firebase (autenticación, Cloud Firestore, Cloud Storage).
 
 [DEMO AppTask](https://apptask-abalasnoa.vercel.app/opening "Web AppTask")
 
@@ -30,13 +30,11 @@ El proyecto se encuentra en una versión inicial de lo que se espera como produc
 - [x] Subir y actualizar imagen de perfil.
 - [x] crear, leer, actualizar y eliminar tareas.
 - [ ] Crear varias listas de tarea.
-- [ ] Ordenar por fecha o por orden propio.
+- [x] Ordenar por fecha o por orden propio.
 - [ ] Agregar subtareas a las tareas.
-- [ ] Agregar la vista 404.
-
-### Bugs
-
-- Al actualizar la foto de perfil se debe refrescar la página para que el cambio de foto se refleje correctamente.
+- [x] Agregar la vista 404.
+- [ ] Recuperar contraseña.
+- [ ] Agregar animaciones.
 
 ## Instalación
 
