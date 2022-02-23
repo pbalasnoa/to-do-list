@@ -15,36 +15,64 @@ const initialValues = {
   confirmPassword: "",
 };
 
+const ERROR_MESSAGES = {
+  "auth/invalid-email": {
+    isError: true,
+    message: "El correo ingresado no es válido",
+  },
+  "auth/email-already-in-use": {
+    isError: true,
+    message: "El correo ingresado ya lo tiene otro usuario",
+  },
+  "auth/weak-password": {
+    isError: true,
+    message: "La contraseña debe tener al menos 6 caracteres",
+  },
+};
+
 const SignUp = () => {
   const { width: breakpointWidth } = useWindowDimensions();
   const { values, setValues, handleInputChange } = useForm(initialValues);
-  const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState({
+    isError: false,
+    message: "",
+  });
+
+  const errorReset = () => {
+    setTimeout(() => {
+      setError({ isError: false, message: "" });
+    }, 3000);
+  };
 
   const handleSignUp = (e) => {
     e.preventDefault();
-    if (values.password !== values.confirmPassword) {
-      setErrorMessage("Las contraseñas no coinciden");
-    } else if (
+    if (
       values.email === "" ||
       values.password === "" ||
       values.password === ""
     ) {
-      setErrorMessage("Debe llenar todos los campos");
-    } else {
-      createUser(values.email, values.password, (res) => {
-        if (res.success === "ok") setIsLoading(true);
-
-        if (res.errorCode === "auth/invalid-email")
-          setErrorMessage("El correo ingresado no es válido");
-
-        if (res.errorCode === "auth/email-already-in-use")
-          setErrorMessage("El correo ingresado ya lo tiene otro usuario");
-
-        if (res.errorCode === "auth/weak-password")
-          setErrorMessage("La contraseña debe tener al menos 6 caracteres");
-      });
+      errorReset();
+      setError({ isError: true, message: "Debe llenar todos los campos" });
+      return;
     }
+
+    if (values.password !== values.confirmPassword) {
+      errorReset();
+      setError({ isError: true, message: "Las contraseñas no coinciden" });
+      return;
+    }
+
+    createUser(values.email, values.password, ({ success, errorCode }) => {
+      if (success === "ok") setIsLoading(true);
+
+      if (errorCode) {
+        errorReset();
+        const errorMessage = ERROR_MESSAGES[errorCode];
+        setError(errorMessage);
+      }
+    });
+
     setValues({ ...values, password: "", confirmPassword: "" });
   };
 
@@ -64,7 +92,7 @@ const SignUp = () => {
             <h1 className="my-1">Hola!</h1>
             <p>Crea una nueva cuenta</p>
           </div>
-          {errorMessage && <p className="mt-1 --red_500">{errorMessage}</p>}
+          {error.isError && <p className="mt-1 --red_500">{error.message}</p>}
           <form onSubmit={handleSignUp} className="align-left-column-box">
             <div className="w-1 mt-1_25">
               <Input

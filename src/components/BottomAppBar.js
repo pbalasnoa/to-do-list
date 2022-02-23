@@ -5,7 +5,7 @@ const BottomAppBar = ({ openModal, openModalOptions }) => {
     <div className="bottom-bar icon">
       <div className="tabs">
         <div className="tab tab--left">
-          <span className="material-icons">menu</span>
+          {/* <span className="material-icons">menu</span> */}
         </div>
         <div className="tab tab--fab">
           <div className="top">

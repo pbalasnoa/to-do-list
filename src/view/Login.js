@@ -48,6 +48,7 @@ const Login = () => {
     e.preventDefault();
 
     if (values.email === "" || values.password === "") {
+      errorReset();
       setError({ isError: true, message: "Debe llenar todos los campos" });
       return;
     }
