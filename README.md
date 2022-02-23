@@ -6,7 +6,7 @@ Web responsiva que funciona como un _To Do_, organizador de tareas. El diseño e
 
 Este proyecto se hace con el fin de practicar el modelo CRUD y el uso de Firebase (autenticación, Cloud Firestore, Cloud Storage).
 
-[DEMO AppTask](https://apptask-abalasnoa.vercel.app/opening "Web AppTask")
+[DEMO AppTask](https://apptask.vercel.app/opening "Web AppTask")
 
 ![Vista previa de AppTask](https://firebasestorage.googleapis.com/v0/b/to-do-list-84dd6.appspot.com/o/readme%2Fpreview.png?alt=media&token=2839eb36-1da0-47dc-84ab-65a1b8c7c6ed "Vista previa de AppTask")
 
